@@ -1,6 +1,6 @@
 import React,{ Fragment } from 'react'
 import {BrowserRouter,Route,Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toast'
+import { Toaster } from 'react-hot-toast'
 import './index.css'
 import UserRoute from './Routes/user/userRoute'
 import OwnerRoute from './Routes/owner/ownerRoute'
@@ -16,7 +16,7 @@ function App(){
         <Loader/>
       } */}
       <BrowserRouter>
-      <ToastContainer className='Toast' delay={3000} position='top-center' />
+      <Toaster/>
         <Routes>
           <Route path='/*' element={<UserRoute/>} />
 

@@ -5,7 +5,7 @@ function PublicRouteUser(props) {
   if(localStorage.getItem("token")){
     return <Navigate to={'/'}/>
   }else{
-    console.log('user is there')
+    // console.log('user is there')
     return props.children
   }
 }

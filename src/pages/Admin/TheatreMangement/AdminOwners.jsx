@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Footer from '../../../components/AdminFooter/Footer'
 import Header from '../../../components/AdminHeader/Header'
 import TheatreManagement from '../../../components/TheatreManagement/TheatreManagement'

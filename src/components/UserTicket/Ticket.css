@@ -1,0 +1,109 @@
+/* ticket container */
+.ticket {
+    width: 450px;
+    height: 775px;
+    background-color: #fff;
+    margin:  auto;
+    position: relative; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Add a shadow effect */
+  }
+  
+
+ 
+  
+  /* bottom circles */
+  .holes-lower {
+    position: relative;
+    margin: 25px;
+    border: 1px dashed #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow effect */
+  }
+  
+  .holes-lower:before,
+  .holes-lower:after {
+    content: '';
+    height: 50px;
+    width: 50px;
+    background-color: #d1d5db;
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .holes-lower:before {
+    top: -25px;
+    left: -50px;
+  }
+  
+  .holes-lower:after {
+    top: -25px;
+    left: 400px;
+  }
+  
+  
+  /* title section */
+  .title {
+    padding: 12% 35% ;
+  }
+  
+  .cinema {
+    color: #000000;
+    font-size: 15px;
+    
+  }
+  
+  .movie-title {
+    font-size: 25px;
+  }
+  
+  /* information section */
+  .info {
+    padding: 15px 25px;
+    font-size: large;
+  }
+  
+  /* table section */
+  .table-container {
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .table-container tr {
+    margin-bottom: 10px;
+  }
+  
+  .table-container th {
+    text-align: left;
+  
+   
+  }
+  
+  .table-container td {
+    width: 33%;
+    font-size: 32px;
+  }
+  
+  /* bigger text */
+ 
+  
+  /* serial section */
+  .serial {
+    padding: 25px;
+  }
+  
+  .serial table {
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .serial td {
+    width: 3px;
+    height: 50px;
+  }
+  
+  .numbers td {
+    font-size: 16px;
+    text-align: center;
+  }
+  

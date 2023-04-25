@@ -7,14 +7,16 @@ import { userUrl} from '../../../apiLinks/apiLinks'
 import { toast, Toaster } from 'react-hot-toast'
 import { setUser } from '../../redux/usersSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getVerify } from '../../api/user/users';
 
  function Header() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false);
   const [loginEmail, setLoginEmail] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [islogin,setIslogin] =useState(false)
-
   // ****************signup**************
 
   const [signModal , setSignModal] = useState(false);
@@ -29,7 +31,8 @@ import { useDispatch } from 'react-redux';
 
   const [otpModal, setOtpModal] = useState(false);
   const [otp, setOtp] = useState('')
-
+  const [forgot,setForgot] = useState(false)
+  const [forgotEmail,setForgotEmail] = useState('')
 // 
 const [showSidebar, setShowSidebar] = useState(false);
 const [displayName,setDisplayName] = useState('')
@@ -65,6 +68,12 @@ const [displayName,setDisplayName] = useState('')
     } else {
         toast.error("Passwords doesnt match")
     }
+}
+
+const resendOtp = () => {
+  axios.post(`${userUrl}resendOtp`, { signEmail }).then((response) => {
+      response.data.status && toast.success('otp has sent to email')
+  })
 }
 
 const verifyOtpAndSignUp = (e) => {
@@ -105,6 +114,7 @@ const logout = () => {
   dispatch(setUser(null))
   localStorage.removeItem("userToken"),setShowSidebar(false),
   setIslogin(false)
+  navigate('/')
 };
 
 function isAuthenticated() {
@@ -116,6 +126,16 @@ function isAuthenticated() {
   return token ? setIslogin(true) : setIslogin(false);
 }
 
+const chectEmail = async(e) =>{
+  e.preventDefault()
+  const response = await getVerify(forgotEmail)
+  if(response.success){
+    toast.success(response.message)
+  }else{
+    toast.error(response.message)
+  }
+}
+
   return (
     <header className="bg-gray-800">
        <Toaster />
@@ -125,7 +145,6 @@ function isAuthenticated() {
         <div className="text-white font-bold pl-6 pr-3" style={{fontSize: "24px"}}>
           <h2>book<span className="text-danger font-bold">my</span>screen</h2>
         </div>
-        
        
     {islogin?(
       <>
@@ -136,49 +155,42 @@ function isAuthenticated() {
       ) :null}
       
       <div
-        className={`top-0 right-0 w-[25vw] bg-gray-800  p-10 pl-10 text-white fixed h-full z-40  ease-in-out duration-300 fixed ${
-          showSidebar ? "translate-x-0 " : "translate-x-full"
-        }`}
-      >
-      <h6
-          className="mt-10 text-3xl font-semibold text-white cursor-pointer"
-        >
-         <span className='pr-2'>Hi </span>{displayName}
-        </h6>
-        <h6
-          className="mt-10 text-2xl font-semibold text-white cursor-pointer"
-        >
-          Profile
-        </h6>
-        <h6
-          className="mt-10 text-2xl font-semibold text-white cursor-pointer"
-        >
-          Your Orders
-        </h6>
-        <h6
-          className="mt-10 text-2xl font-semibold text-white cursor-pointer"
-        >
-          Wallet
-        </h6>
-        <h6 onClick={() => setShowSidebar(!showSidebar)}
-          className="mt-10 text-2xl font-semibold text-white cursor-pointer"
-        >
-          Exit
-        </h6>
-        <div className="flex h-screen items-center justify-center">
-        <button className="absolute bottom-0 mb-4  bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 px-14  rounded" onClick={logout} >
-                 Log out
-                </button>
-                </div>
-      </div>
+  className={`top-0 right-0 w-full md:w-[25vw] bg-gray-800 p-5 md:p-10 text-white fixed h-full z-40 transition-all duration-300 ${
+    showSidebar ? "translate-x-0 " : "translate-x-full"
+  }`}
+>
+  <h6 className="mt-6 md:mt-10 text-2xl md:text-3xl font-semibold text-white cursor-pointer">
+    <span className="pr-2">Hi </span>
+    {displayName}
+  </h6>
+  <h6 className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+    Profile
+  </h6>
+  <h6 onClick={()=>{navigate('/orders')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+    Your Orders
+  </h6>
+  <h6 onClick={()=>{navigate('/wallet')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+    Wallet
+  </h6>
+  <h6
+    onClick={() => setShowSidebar(!showSidebar)}
+    className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer"
+  >
+    Exit
+  </h6>
+  <div className="flex h-screen items-center justify-center">
+    <button
+      className="absolute bottom-0 mb-4 md:mb-8 bg-red-500 hover:bg-red-600 text-white font-bold text-base md:text-lg py-2 px-10 md:px-14 rounded"
+      onClick={logout}
+    >
+      Log out
+    </button>
+  </div>
+</div>
       </>
-
-
-
-
     ):(
 
-<div className="flex pl-2">
+<div className="flex pl-2 mr-2">
 <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-4 rounded" onClick={() => {
    setShowModal(true)
  }}>
@@ -196,9 +208,9 @@ Login
         <nav className="container mx-auto px-6 py-3">
       <div className="flex items-center justify-between">
         <div >
-          <a className="mx-3 text-white hover:text-gray-300" href="#">Home</a>
-          <a className="mx-3 text-white hover:text-gray-300" href="#">Movies</a>
-          <a className="mx-3 text-white hover:text-gray-300" href="#">Theatres</a>
+          <a className="mx-3 text-white hover:text-gray-300" style={{ cursor: 'pointer' }} onClick={()=>{navigate('/')}}>Home</a>
+          <a className="mx-3 text-white hover:text-gray-300" style={{ cursor: 'pointer' }} onClick={()=>{navigate('/allMovies')}}>Movies</a>
+          <a className="mx-3 text-white hover:text-gray-300" style={{ cursor: 'pointer' }} >Theatres</a>
         </div>
       </div>
     </nav>
@@ -207,114 +219,136 @@ Login
                 {/* ***********************************************Login*********************************************** */}
 
         {showModal ? (
-        <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none" >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl" >
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none" >
-                  <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full" onSubmit={userSignIN}>
-                <div className="flex items-start justify-center p-3 border-b border-solid border-gray-300 rounded-t " >
-                  <h1 className=" font-bold" style={{ fontSize: '24px' }}>Login</h1>
-                 
+      <>
+      <div className=" modal flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-gray-900">
+        <div className="card">
+        <div className="card-header text-center">
+          <h3 className='text-xl'>Sign in</h3>
+         </div>
+          <div className="card-body">
+            <form onSubmit={userSignIN}>
+              <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-user" /></span>
                 </div>
-                <div className="relative p-6 flex-auto">
-                
-                    
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Email-Id
-                    </label>
-                    <input type="email" required placeholder="johnsnow@example.com" onChange={(e) => setLoginEmail(e.target.value)}  className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Password
-                    </label>
-                    <input type="password" required placeholder="Enter your password" onChange={(e) => setLoginPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                   
-                 
-                </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="submit"
-                    // onClick={() => setShowModal(false)}
-                  >
-                    Submit
-                  </button>
-                  
-                </div>
-                <div className="flex items-start justify-center pb-6" >
-                  <a className=" font-bold " onClick={() => {
-              setSignModal(true),setShowModal(false)
-            }} >Register</a>
-                </div>
-                </form>
+                <input type="text" onChange={(e) => setLoginEmail(e.target.value)} className="form-control" placeholder="Email Id" />
               </div>
-            </div>
+              <div className="input-group form-group">
+                <div className="input-group-prepen">
+                  <span className="input-group-text"><i className="fas fa-key" /></span>
+                </div>
+                <input type="password" onChange={(e) => setLoginPassword(e.target.value)} className="form-control" placeholder="password" />
+              </div>
+              <div className="form-group">
+                <input type="submit" defaultValue="Login" className="btn float-right login_btn" />
+              </div>
+            </form>
           </div>
-        </>
+          <div className="card-footer">
+            <div className="d-flex justify-content-center links">
+             
+              <button onClick={() => {
+                setSignModal(true),setShowModal(false)
+              }} type="button" className="btn btn-primary btn-md mb-1" style={{backgroundColor: '#35558a'}}>
+            Sign Up
+          </button>
+            </div>
+            <div className="d-flex justify-content-center ">
+              <a onClick={()=>(setForgot(true),setShowModal(false))} className='text-lg pb-2' style={{color: 'white',cursor: 'pointer'}} >Forgot your password?</a>
+            </div>
+            <button
+              
+              type="button"
+              onClick={() => setShowModal(false)}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '1rem',
+                color: 'red'
+              }}
+            >
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+    
       ) : null}
                  
    {/* ***************************************************Signup**************************************************************               */}
 
 {signModal ? (
         <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none" >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl" >
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none" >
-              <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full" onSubmit={sentOtp}>
-                <div className="flex items-start justify-center p-3 border-b border-solid border-gray-300 rounded-t " >
-                  <h1 className=" font-bold" style={{ fontSize: '24px' }}>Create a New Account</h1>
+          <div className="modal flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-gray-900">
+        <div className="card w-full h-auto">
+        <div className="card-header text-center">
+          <h3 className='text-xl'>Register Here</h3>
+         </div>
+          <div className="card-body">
+            <form onSubmit={sentOtp}>
+            <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-user" /></span>
                 </div>
-                <div className="relative p-6 flex-auto">
-                  
-                    <label className="block text-black text-sm font-bold mb-1">
-                      User Name
-                    </label>
-                    <input required type="text" placeholder="John" onChange={(e) => setSignName(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Email-Id
-                    </label>
-                    <input required type="email" placeholder="johnsnow@example.com" onChange={(e) => setSignEmail(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Mobile Number
-                    </label>
-                    <input required type="text" placeholder="XXX-XX-XXXX-XXX" onChange={(e) => setSignPhone(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label  className="block text-black text-sm font-bold mb-1">
-                      Password
-                    </label>
-                    <input required type="password" placeholder="Password" onChange={(e) => setSignPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
-                      Confirm-Password
-                    </label>
-                    <input required type="Cpassword" placeholder="Confirm-Password" onChange={(e) => setSignCPassword(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                  
-                </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    onClick={() => setSignModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button 
-                    className="text-white bg-green-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="submit"
-                    // onClick={() => setOtpModal(true)}
-                  >
-                    Register
-                  </button>
-                </div>
-                </form>
+                <input required type="text" onChange={(e) => setSignName(e.target.value)} className="form-control" placeholder="User Name" />
               </div>
-            </div>
+              <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-user" /></span>
+                </div>
+                <input required type="text" onChange={(e) => setSignEmail(e.target.value)} className="form-control" placeholder="Email Id" />
+              </div>
+
+               
+
+              
+
+             <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-user" /></span>
+                </div>
+                <input required type="number" onChange={(e) => setSignPhone(e.target.value)} className="form-control" placeholder="Mob Number" />
+              </div>
+
+
+
+              <div className="input-group form-group">
+                <div className="input-group-prepen">
+                  <span className="input-group-text"><i className="fas fa-key" /></span>
+                </div>
+                <input required type="password" onChange={(e) => setSignPassword(e.target.value)} className="form-control" placeholder="Password" />
+              </div>
+               <div className="input-group form-group">
+                <div className="input-group-prepen">
+                  <span className="input-group-text"><i className="fas fa-key" /></span>
+                </div>
+                <input required type="password" onChange={(e) => setSignCPassword(e.target.value)} className="form-control" placeholder="Confirm-Password"/>
+              </div>
+
+
+              <div className="form-group">
+                <input type="submit" defaultValue="Login" className="btn float-right login_btn" />
+              </div>
+            </form>
           </div>
+          <div className="card-footer">
+            
+            <button
+             
+              onClick={() => setSignModal(false)}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '1rem',
+                color: 'red'
+              }}
+            >
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
         </>
       ) : null}
 
@@ -322,46 +356,124 @@ Login
 
 {otpModal ? (
         <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none" >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl" >
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none" >
-              <form onSubmit={verifyOtpAndSignUp} className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                <div className="flex items-start justify-center p-3 border-b border-solid border-gray-300 rounded-t " >
-                  <h1 className=" font-bold" style={{ fontSize: '24px' }}>OTP</h1>
-                 
-                </div>
-                <div className="relative p-6 flex-auto">
-                  
-                    <label className="block text-black text-sm font-bold mb-1">
+          <div className=" modal flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-gray-900">
+        <div className="card">
+        <div className="card-header text-center">
+          <h3 className='text-xl'>OTP verification</h3>
+         </div>
+          <div className="card-body">
+            <form onSubmit={verifyOtpAndSignUp}>
+            <label className="block text-white text-lg  mb-3">
                     Enter OTP sent to Your Email-Id
                     </label>
-                    <input required onChange={(e) => setOtp(e.target.value)} className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+              <div className="input-group form-group">
+                
                   
-                 
-                </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
-                    onClick={() => setOtpModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="text-white bg-green-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="submit"
-                    // onClick={() => setOtpModal(false)}
-                  >
-                    Verify
-                  </button>
-                  
-                </div>
-                </form>
+                <input type="number" required onChange={(e) => setOtp(e.target.value)} className="form-control" placeholder="OTP" />
               </div>
-            </div>
+              
+              <div className="form-group">
+                <input type="submit" defaultValue="Login" className="btn float-right login_btn" />
+              </div>
+            </form>
           </div>
+          <div className="card-footer">
+            <div className="d-flex justify-content-center links">
+             
+              <button onClick={() => {
+                onClick={resendOtp}
+              }} type="button" className="btn btn-primary btn-md mb-1" style={{backgroundColor: '#35558a'}}>
+           Resent
+          </button>
+            </div>
+            <div className="flex items-start justify-center pb-6" >
+                  <a className=" font-bold text-white"  ></a>
+                </div>
+            <button
+              
+              type="button"
+              onClick={() => setOtpModal(false)}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '1rem',
+                color: 'red'
+              }}
+            >
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
         </>
       ) : null}
+
+
+
+      {/* **************************************************Forgot password************************************************************* */}
+
+      {forgot ? (
+        <>
+          <div className=" modal flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-gray-900">
+        <div className="card">
+        <div className="card-header text-center">
+          <h3 className='text-xl'>Forgot Password</h3>
+         </div>
+          <div className="card-body">
+            <form onSubmit={chectEmail}>
+            <label className="block text-white text-lg  mb-3">
+                    Enter your Email Id
+                    </label>
+              <div className="input-group form-group">
+
+                <input type="email" required onChange={(e) => setForgotEmail(e.target.value)} className="form-control" placeholder="Email Id" />
+              </div>
+              
+              <div className="form-group">
+                <input type="submit" defaultValue="Login" className="btn float-right login_btn" />
+              </div>
+            </form>
+          </div>
+          <div className="card-footer">
+          <label className="block text-white text-lg  mb-3">
+                   Enter the OTP here
+                    </label>
+          <div className="input-group form-group">
+
+          <input type="email" required onChange={(e) => setOtp(e.target.value)} className="form-control " placeholder="OTP" />
+              </div>
+            <div className="d-flex justify-content-center links">
+             
+              <button onClick={() => {
+                onClick={resendOtp}
+              }} type="button" className="btn btn-primary btn-md mb-1" style={{backgroundColor: '#35558a'}}>
+           Verify
+          </button>
+            </div>
+            <div className="flex items-start justify-center pb-6" >
+                  <a className=" font-bold text-white"  ></a>
+                </div>
+            <button
+              
+              type="button"
+              onClick={() => setForgot(false)}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '1rem',
+                color: 'red'
+              }}
+            >
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+        </>
+      ) : null}
+
+
+
   </header>
     
   )

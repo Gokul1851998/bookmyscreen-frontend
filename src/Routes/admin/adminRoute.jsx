@@ -8,7 +8,8 @@ import ProtectedRouteAdmin from '../../components/ProtectRouteAdmin/ProtectRoute
 import PublicRouteAdmin from '../../components/PublicRouteAdmin/PublicRouteAdmin'
 import OwnerManagement from '../../pages/Admin/OwnerManagement/OwnerManagement'
 import AdminOwners from '../../pages/Admin/TheatreMangement/AdminOwners'
-
+import MovieManagement from '../../pages/Admin/MovieManagement/MovieManagement'
+import AdminOrders from '../../pages/Admin/AllOrders/AdminOrders'
 
  function AdminRoute() {
   return (
@@ -17,8 +18,10 @@ import AdminOwners from '../../pages/Admin/TheatreMangement/AdminOwners'
         <Route path='/' element={<PublicRouteAdmin><Adminlogin/></PublicRouteAdmin>}/>
         <Route path='/dashboard' element={<ProtectedRouteAdmin><Dashboard/></ProtectedRouteAdmin>} /> 
         <Route path='/userManagement' element={<ProtectedRouteAdmin><UserManagement/></ProtectedRouteAdmin>}/>
-        <Route path='/ownerManagement' element={<ProtectedRouteAdmin><OwnerManagement/></ProtectedRouteAdmin>}/>
-        <Route path='/adminOwners' element={<ProtectedRouteAdmin><AdminOwners/></ProtectedRouteAdmin>}/>
+        <Route path='/adminOwners' element={<ProtectedRouteAdmin><OwnerManagement/></ProtectedRouteAdmin>}/>
+        <Route path='/ownerManagement' element={<ProtectedRouteAdmin><AdminOwners/></ProtectedRouteAdmin>}/>
+        <Route path='/adminMovies' element={<ProtectedRouteAdmin><MovieManagement/></ProtectedRouteAdmin>}/>
+        <Route path='/all-orders' element={<ProtectedRouteAdmin><AdminOrders/></ProtectedRouteAdmin>}/>
         </Routes>
       
     </div>

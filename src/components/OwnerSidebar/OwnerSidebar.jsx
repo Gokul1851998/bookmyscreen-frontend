@@ -57,7 +57,7 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
       <div style={{backgroundColor:'#49154e'}}
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
+        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0  overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-64'
         }`}
       >
@@ -221,7 +221,7 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                         className={`block text-slate-200 truncate transition duration-150 ${
                           pathname.includes('community') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
-                        onClick={()=>{navigate('/admin/userManagement')}}
+                        onClick={()=>{navigate('/owner/ownerScreen')}}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -235,8 +235,8 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                                 d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z"
                               />
                             </svg>
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              User Management
+                            <span style={{color:'white'}} className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Screen Management
                             </span>
                           </div>
                         
@@ -265,7 +265,7 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                         className={`block text-slate-200 truncate transition duration-150 ${
                           pathname.includes('finance') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
-                        onClick={()=>{navigate('/admin/ownerManagement')}}
+                        onClick={()=>{navigate('/owner/ownerShows')}}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -283,8 +283,8 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                                 d="M6.939 15.007A5.861 5.861 0 0 1 6 11.829c0-2.937 2.167-5.376 5-5.85V0C4.85.507 0 5.614 0 11.83c0 2.695.922 5.174 2.456 7.17l4.483-3.993Z"
                               />
                             </svg>
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Owner Management
+                            <span style={{color:'white'}} className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Shows List
                             </span>
                           </div>
                         
@@ -305,14 +305,11 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                   return (
                     <React.Fragment>
                       <a
-                        href="#0"
+                        style={{ cursor: 'pointer' }}
                         className={`block text-slate-200 truncate transition duration-150 ${
                           pathname.includes('job') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded ? handleClick() : setSidebarExpanded(true);
-                        }}
+                        onClick={()=>{navigate('/owner/ownerBookings')}}
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
@@ -330,8 +327,8 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                                 d="M21.554 2.471A8.958 8.958 0 0 0 18.167.276a3.105 3.105 0 0 0-3.295.467L9.715 5.888c-1.41 1.408-.665 4.275 1.733 6.668a8.958 8.958 0 0 0 3.387 2.196c.459.157.94.24 1.425.246a2.559 2.559 0 0 0 1.87-.715l5.156-5.146c1.415-1.406.666-4.273-1.732-6.666Zm.318 5.257c-.148.147-.594.2-1.256-.018A7.037 7.037 0 0 1 18.016 6c-1.73-1.728-2.104-3.475-1.73-3.845a.671.671 0 0 1 .465-.129c.27.008.536.057.79.146a7.07 7.07 0 0 1 2.6 1.711c1.73 1.73 2.105 3.472 1.73 3.846Z"
                               />
                             </svg>
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Job Board
+                            <span style={{color:'white'}} className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                              Bookings
                             </span>
                           </div>
                          

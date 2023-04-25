@@ -6,12 +6,12 @@ import { getCurrentUser } from "../../api/user/users";
 import { setUser } from "../../redux/usersSlice";
 
 function ProtectedRouteUser(props) { 
-  const jwtToken =  localStorage.getItem("token")
+  
   const dispatch = useDispatch();
-
   const GetCurrentUser = async() => {
+  
     try {
-      const response = await getCurrentUser({jwtToken})
+      const response = await getCurrentUser()
       if(response.success){
         dispatch(setUser(response.data))
       }else{
@@ -27,14 +27,14 @@ function ProtectedRouteUser(props) {
 
   useEffect(()=>{
      GetCurrentUser()
-  })
+  },[])
 
-    if (localStorage.getItem("token")){
+    if (localStorage.getItem("userToken")){
         console.log('User is loggedIn')
         return props.children;
       } else {
         console.log('User is Not LoggedIn')
-        return <Navigate to={"/login"}/>;
+        return <Navigate to={"/"}/>;
     }
     
 }

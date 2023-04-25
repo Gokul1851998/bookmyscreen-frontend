@@ -6,14 +6,10 @@ import { setOwner } from '../../redux/ownersSlice';
 import { useDispatch } from 'react-redux';
 
 function ProtectedRouteOwner(props) {
-
   const dispatch = useDispatch()
-
-  const jwtToken = localStorage.getItem('ownerToken')
-
   const GetCurrentOwner = async()=>{
     try {
-      const response = await getCurrentOwner({jwtToken})
+      const response = await getCurrentOwner()
       if(response.success){
         dispatch(setOwner(response.data))
       }else{
@@ -28,7 +24,7 @@ function ProtectedRouteOwner(props) {
 
   useEffect(()=>{
     GetCurrentOwner();
-  })
+  },[])
   
     if (localStorage.getItem("ownerToken")){
         console.log('owner is loggedIn')

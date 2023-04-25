@@ -1,0 +1,67 @@
+/* Style the modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  }
+  
+  /* Style the modal container */
+  .modal-content {
+    background-color: #fff; /* White background */
+    border: none; /* Remove border */
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Drop shadow */
+    padding: 0.5rem; /* Add padding */
+  }
+  
+  /* Style the modal header */
+  .modal-header {
+    border-bottom: none; /* Remove bottom border */
+  }
+  
+  /* Style the modal body */
+  .modal-body {
+    color: #000; /* Black text */
+    font-size: 1.25rem; /* Increase font size */
+  }
+  .modal-dialog {
+    width: 1000px;
+}
+  
+  /* Style the modal title */
+  .modal-title {
+    color: #35558a; /* Blue text */
+    font-size: 1.5rem; /* Increase font size */
+    margin-bottom: 2rem; /* Add margin */
+  }
+  
+  /* Style the modal footer */
+  .modal-footer {
+    border-top: none; /* Remove top border */
+    justify-content: center; /* Center content horizontally */
+    padding-top: 2rem; /* Add padding */
+  }
+  
+  /* Style the primary button */
+  .btn-primary {
+    background-color: #35558a; /* Blue background */
+    border-color: #35558a; /* Blue border */
+  }
+  
+  .btn-primary:hover {
+    background-color: #1f2d51; /* Darker blue background on hover */
+    border-color: #1f2d51; /* Darker blue border on hover */
+  }
+  
+  /* Style the close button */
+  .btn-close {
+    color: #000; /* Black text */
+    font-size: 2rem; /* Increase font size */
+    opacity: 0.5; /* Reduce opacity */
+    transition: opacity 0.15s ease-in-out; /* Add transition effect */
+  }
+  
+  .btn-close:hover {
+    color: #000; /* Black text on hover */
+    opacity: 1; /* Increase opacity on hover */
+    text-decoration: none; /* Remove underline on hover */
+  }
+  

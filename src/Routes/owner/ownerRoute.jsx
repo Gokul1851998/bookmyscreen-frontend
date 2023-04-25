@@ -6,7 +6,9 @@ import OwnerSignup from '../../pages/Owner/OwnerSignup/OwnerSigup'
 import Dashboard from '../../pages/Owner/OwnerDasboard/Dashboard'
 import PublicRouteOwner from '../../components/PublicRouteOwner/PublicRouteOwner'
 import ProtectedRouteOwner from '../../components/ProtectRouteOwner/ProtectRouteOwner'
-
+import OwnerScreenMangement from '../../pages/Owner/OwnerScreenManagement/OwnerScreenMangement'
+import OwnerShows from '../../pages/Owner/OwnerShows/OwnerShows'
+import OwnerBookings from '../../pages/Owner/OwnerBookings/OwnerBookings'
 
  function OwnerRoute() {
   return (
@@ -15,6 +17,9 @@ import ProtectedRouteOwner from '../../components/ProtectRouteOwner/ProtectRoute
     <Route path='/' element={<PublicRouteOwner><LoginView/></PublicRouteOwner>}/>
     <Route path='/ownersignup' element={<PublicRouteOwner><OwnerSignup/></PublicRouteOwner>}/>
     <Route path='/ownerHome' element={<ProtectedRouteOwner><Dashboard/></ProtectedRouteOwner>}/>
+    <Route path='/ownerScreen' element={<ProtectedRouteOwner><OwnerScreenMangement/></ProtectedRouteOwner>}/>
+    <Route path='/ownerShows' element={<ProtectedRouteOwner><OwnerShows/></ProtectedRouteOwner>}/>
+    <Route path='/ownerBookings' element={<ProtectedRouteOwner><OwnerBookings/></ProtectedRouteOwner>}/>
     </Routes>
  </Fragment>
   )

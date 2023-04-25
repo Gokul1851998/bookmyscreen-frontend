@@ -29,7 +29,9 @@ function UserList() {
   
   const getAllUsers = async () => {
     try {
-      const response = await axios.get(`${adminUrl}adminuser`);
+      const token = localStorage.getItem('adminToken');
+      const headers = { Authorization: `Bearer ${token}` };
+      const response = await axios.get(`${adminUrl}adminuser`,{headers});
       return response.data;
     } catch (error) {
       console.log(error.response);
@@ -122,7 +124,7 @@ const {
           Users List
         </h2>
         <div className="overflow-x-auto">
-          <table id="myTable" {...getTableProps()} style={{ border: "1px solid black" }} className="table-auto min-w-full divide-y divide-gray-300">
+          <table id="myTable" {...getTableProps()} style={{ border: "0.5px solid black" }} className="table-auto min-w-full divide-y divide-gray-300">
             <thead className="bg-gray-900 text-white">
             {headerGroups && headerGroups.map((headerGroup)=>(
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -142,7 +144,7 @@ const {
           page.map((row)=>{
            prepareRow(row)
            return(
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} >
                 <td className="px-6 py-4 whitespace-nowrap" >
                 {+row.id + 1 }
                 </td>
@@ -157,8 +159,17 @@ const {
                 
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                 {row?.original?.block===false ? 
-                        <button onClick={()=>handleBlock(row.original._id)} className="bg-red-600 border-red-600 border-2 w-20  rounded-lg text-slate-200 hover:bg-red-500 hover:border-red-500 transition">Block</button>
-                        : <button onClick={()=>handleUnblock(row.original._id)} className="bg-green-600 border-green-600 border-2 w-20  rounded-lg text-slate-200 hover:bg-green-500 hover:border-green-500 transition">Unblock</button>
+                        <button 
+                        onClick={()=>handleBlock(row.original._id)}
+                        type="button"
+                        className="inline-block rounded bg-danger px-9 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)]">
+                        Block
+                      </button>
+                        :  <button onClick={()=>handleUnblock(row.original._id)}
+                    type="button"
+                    className="inline-block rounded bg-success px-6 pt-2.5 pb-2 text-sm font-bold uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)]">
+                       Unblock
+                  </button>
                         }
                         </td>
               </tr>

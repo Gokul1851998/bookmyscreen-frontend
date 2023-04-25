@@ -24,11 +24,11 @@ import { adminUrl } from '../../../apiLinks/apiLinks';
        <div className="bg-black text-white font-bold pl-6 pr-3 " style={{fontSize: "24px"}}>
           <h2 className='pt-2 pb-2'>book<span className="text-danger font-bold">my</span>screen</h2>
         </div>
-    <section className="h-screen mr-10 ml-10">
+    <section style={{backgroundImage:'url()'}} className="h-screen mr-10 ml-10">
     <div className="h-full">
       <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
         <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-          <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" className="w-full" alt="Sample image" />
+          <img src="https://img.freepik.com/free-vector/national-popcorn-day-banner-design_1308-122939.jpg?w=740&t=st=1681305489~exp=1681306089~hmac=69860a34860e823caa5c1769e6407107efd52a4fc013d70d5fd01b8fe96f40db" className="w-full" alt="Sample image" />
         </div>
         <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
           <form>

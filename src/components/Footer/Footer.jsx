@@ -3,7 +3,7 @@ import './Footer.css';
 
 function Footer() {
     return (
-    <footer className="relative footer-main pt-8 pb-6 mt-1">
+    <footer className="footer-main pt-8 pb-6 ">
         <div className="flex justify-center text-white font-bold pl-6 pr-3" style={{fontSize: "24px"}}>
           <h2>book<span className="text-danger font-bold">my</span>screen</h2><hr className="border-t-2 bg-white" />
         </div>
