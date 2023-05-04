@@ -42,9 +42,11 @@ import Swal from 'sweetalert2';
        e.preventDefault()
        setLoading(true)
        axios.post(`${ownerUrl}login`, adminData).then((response)=>{
-        console.log(response);
+       
         setid(response.data._id)
-        if (response.data.logIn) {             
+        if (response.data.logIn) {    
+          console.log(response,"llllllllllllllllllllllllllllllllll");        
+           
           (localStorage.setItem('ownerToken',response.data?.token),setOwnerlogin(true),navigate('/owner/ownerHome'))
         }else if(response.data.status === 'You are Blocked'){
           toast.error('Your account is blocked')
@@ -60,6 +62,8 @@ import Swal from 'sweetalert2';
           toast.error('Invalid User input')
         }  
        })
+      
+
     }
 
     const reApply = async() =>{

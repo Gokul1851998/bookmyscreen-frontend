@@ -7,7 +7,9 @@ const ownersSlice = createSlice({
     },
     reducers: {
         setOwner : (state,action) => {
+           
             state.owner = action.payload 
+          
         }
     }
 })

@@ -8,7 +8,8 @@ import { toast, Toaster } from 'react-hot-toast'
 import { setUser } from '../../redux/usersSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getVerify } from '../../api/user/users';
+import { getSearch, getVerify } from '../../api/user/users';
+import { imageUrl } from '../../constants/constants';
 
  function Header() {
   const dispatch = useDispatch();
@@ -33,9 +34,16 @@ import { getVerify } from '../../api/user/users';
   const [otp, setOtp] = useState('')
   const [forgot,setForgot] = useState(false)
   const [forgotEmail,setForgotEmail] = useState('')
+  const [forgotOTP,setForgotOTP] = useState('')
+  const [forPassword,setForPassword] = useState(false)
+  const [forPassword1,setForPassword1] = useState(false)
+  const [forPassword2,setForPassword2] = useState(false)
+
 // 
 const [showSidebar, setShowSidebar] = useState(false);
 const [displayName,setDisplayName] = useState('')
+const [inputValue,setInputValue] = useState('')
+const [suggestions,setSuggestions] = useState([])
 
   let userSignup = {
     signName,
@@ -48,6 +56,12 @@ const [displayName,setDisplayName] = useState('')
   let userData ={
     loginEmail,
     loginPassword
+  }
+
+  let forgotData={
+    forgotEmail,
+    forPassword1,
+    forPassword2
   }
 
   useEffect(() => {
@@ -85,6 +99,26 @@ const verifyOtpAndSignUp = (e) => {
       toast.error('some unexpected errors please try after some time')
   }).finally(() => setLoading(false))
 }   
+
+const verifyOtp2 = (e) =>{
+  e.preventDefault()
+  setLoading(true)
+  axios.post(`${userUrl}forgotOtp`, { forgotEmail,forgotOTP}).then((response) => {
+    response.data.success ? (setForgot(false),setForPassword(true)) : toast.error('Incorrect otp')
+  }).catch(() => {
+    toast.error('some unexpected errors please try after some time')
+}).finally(() => setLoading(false))
+}
+
+const checkPassword =(e)=>{
+  e.preventDefault()
+  setLoading(true)
+  axios.post(`${userUrl}reset-password`, {forgotData}).then((response) => {
+    response.data.success ? (setShowModal(true),setForPassword(false),toast.success(response.message)) : toast.error(response.message)
+  }).catch(() => {
+    toast.error('some unexpected errors please try after some time')
+}).finally(() => setLoading(false))
+}
 
 const userSignIN = (e) => {
   e.preventDefault()
@@ -136,6 +170,29 @@ const chectEmail = async(e) =>{
   }
 }
 
+const handleInputChange = async (e) => {
+  e.preventDefault()
+  try {
+    const value = e.target.value;
+    setInputValue(value);
+    if (value.trim() !== '') { // check if the input value is not empty
+    
+      const response = await getSearch(value);
+      console.log(response.data);
+      setSuggestions(response.data);
+    } else {
+      setSuggestions([]); // clear the suggestions if the input value is empty
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const singlePage=(movieId)=>{
+  navigate('/singleMoviePage',{state:movieId})
+  setSuggestions('')
+}
+
   return (
     <header className="bg-gray-800">
        <Toaster />
@@ -145,7 +202,41 @@ const chectEmail = async(e) =>{
         <div className="text-white font-bold pl-6 pr-3" style={{fontSize: "24px"}}>
           <h2>book<span className="text-danger font-bold">my</span>screen</h2>
         </div>
-       
+        <div className="relative text-gray-600">
+     
+        <input type="search" value={inputValue}
+          onChange={(e) => handleInputChange(e)} name="serch" placeholder="Search" className="bg-white w-60 px-4  rounded-full text-sm focus:outline-none" />
+         
+          {suggestions.length ? (
+            <div className="dropdown w-80">
+              
+            {suggestions
+            .filter((item) => {
+            const searchTerm = inputValue.toLowerCase();
+            const title = item.title.toLowerCase();
+
+            return (
+            searchTerm &&
+            title.startsWith(searchTerm) &&
+            title !== searchTerm
+            );
+            })
+            .slice(0, 3)
+            .map((suggestion) => (
+              <div  className="dropdown-row" key={suggestion.title}>
+              <a onClick={()=>singlePage(suggestion.movieId)}>
+              <img src={imageUrl + suggestion.image} className="w-10 h-15 object-cover object-center inline-block mr-2" />
+              <span className="inline-block">{suggestion.title}</span>
+              </a>
+            </div>
+            ))}
+            </div>
+          ):null}
+          
+        
+      </div>
+      
+     
     {islogin?(
       <>
       {isAuthenticated?  (
@@ -163,7 +254,7 @@ const chectEmail = async(e) =>{
     <span className="pr-2">Hi </span>
     {displayName}
   </h6>
-  <h6 className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+  <h6 onClick={()=>{navigate('/profile')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
     Profile
   </h6>
   <h6 onClick={()=>{navigate('/orders')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
@@ -171,6 +262,9 @@ const chectEmail = async(e) =>{
   </h6>
   <h6 onClick={()=>{navigate('/wallet')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
     Wallet
+  </h6>
+  <h6 onClick={()=>{navigate('/chat')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+    Chat
   </h6>
   <h6
     onClick={() => setShowSidebar(!showSidebar)}
@@ -187,6 +281,7 @@ const chectEmail = async(e) =>{
     </button>
   </div>
 </div>
+<div className="relative text-gray-600"></div>
       </>
     ):(
 
@@ -421,7 +516,7 @@ Login
          </div>
           <div className="card-body">
             <form onSubmit={chectEmail}>
-            <label className="block text-white text-lg  mb-3">
+            <label className="block text-white text-lg  mb-2">
                     Enter your Email Id
                     </label>
               <div className="input-group form-group">
@@ -435,21 +530,21 @@ Login
             </form>
           </div>
           <div className="card-footer">
-          <label className="block text-white text-lg  mb-3">
+            <form onSubmit={verifyOtp2}>
+          <label className="block text-white text-lg  mb-2">
                    Enter the OTP here
                     </label>
           <div className="input-group form-group">
 
-          <input type="email" required onChange={(e) => setOtp(e.target.value)} className="form-control " placeholder="OTP" />
+          <input type="number" required onChange={(e) => setForgotOTP(e.target.value)} className="form-control " placeholder="OTP" />
               </div>
             <div className="d-flex justify-content-center links">
              
-              <button onClick={() => {
-                onClick={resendOtp}
-              }} type="button" className="btn btn-primary btn-md mb-1" style={{backgroundColor: '#35558a'}}>
+              <button  type="submit" className="btn btn-primary btn-md mb-1" style={{backgroundColor: '#35558a'}}>
            Verify
           </button>
             </div>
+            </form>
             <div className="flex items-start justify-center pb-6" >
                   <a className=" font-bold text-white"  ></a>
                 </div>
@@ -466,6 +561,7 @@ Login
             >
               <i class="fa fa-window-close" aria-hidden="true"></i>
             </button>
+
           </div>
         </div>
       </div>
@@ -473,6 +569,55 @@ Login
       ) : null}
 
 
+
+{forPassword ? (
+      <>
+      <div className=" modal flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-gray-900">
+        <div className="card">
+        <div className="card-header text-center">
+          <h3 className='text-xl'>Reset Password</h3>
+         </div>
+          <div className="card-body">
+            <form onClick={checkPassword}>
+              <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-key" /></span>
+                </div>
+                <input type="number" onChange={(e) => setForPassword1(e.target.value)} className="form-control" placeholder="Password" />
+              </div>
+              <div className="input-group form-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text"><i className="fas fa-key" /></span>
+                </div>
+                <input type="number" onChange={(e) => setForPassword2(e.target.value)} className="form-control" placeholder="Confirm password" />
+              </div>
+              <div className="form-group">
+                <input type="submit" defaultValue="Login" className="btn float-right login_btn" />
+              </div>
+            </form>
+          </div>
+          <div className="card-footer">
+           
+          
+            <button
+              
+              type="button"
+              onClick={() => setForPassword(false)}
+              style={{
+                position: 'absolute',
+                top: '0.5rem',
+                right: '1rem',
+                color: 'red'
+              }}
+            >
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+    
+      ) : null}
 
   </header>
     

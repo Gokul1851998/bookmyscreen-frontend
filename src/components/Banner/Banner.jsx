@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import axios from 'axios'
+import './Banner'
 import { getBanner } from '../../api/movie/movie';
 import { toast } from 'react-hot-toast';
 import { imageUrl } from '../../constants/constants';
@@ -13,8 +14,7 @@ const Banner = () => {
   useEffect(()=>{
     const fetchData=async()=>{
      const response = await getBanner()
-     if(response){
-      console.log(response.results);
+     if(response.results){
        setMovie1(response.results[0])
        setMovie2(response.results[1])
        setMovie3(response.results[2])
@@ -22,47 +22,71 @@ const Banner = () => {
       toast.error('Something went wrong')
      }
     }
-    fetchData()
-    
+    fetchData() 
   },[])
-  
+ 
   return (
-    <div className='m-3' >
-    <MDBCarousel showIndicators showControls fade>
-      <MDBCarouselItem
-        className="w-100  d-block"
-        style={{height:'650px',borderRadius:'10px'}}
-        itemId={1}
-        src={imageUrl+movie1.poster_path}
-        alt="..."
-      >
-        <h5>First slide label</h5>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-      </MDBCarouselItem>
-
-      {/* <MDBCarouselItem
-        className="w-100 d-block"
-        style={{height:'500px'}}
-        itemId={2}
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg"
-        alt="..."
-      >
-        <h5>Second slide label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </MDBCarouselItem>
-
-      <MDBCarouselItem
-        className="w-100 d-block"
-        style={{height:'500px'}}
-        itemId={3}
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg"
-        alt="..."
-      >
-        <h5>Third slide label</h5>
-        <p>
-          Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-        </p>
-      </MDBCarouselItem> */}
+    <div className='m-3'>
+  <MDBCarousel showIndicators showControls fade>
+    <div className="carousel-inner">
+    <div className="carousel-item position-relative" style={{ height: '600px' }}>
+        <img className="position-absolute w-100 h-100" src={imageUrl+movie1.poster_path} style={{ objectFit: 'cover', filter: 'brightness(30%)' }} />
+        <div className="carousel-caption d-flex align-items-center ml-20">
+          <div className="p-3" style={{ maxWidth: '700px' }}>
+            <div className="d-flex align-items-center">
+              <div className="product-img position-relative overflow-hidden mr-3">
+                <img className="img-fluid w-80" src={`${imageUrl+movie1.poster_path}`} />
+              </div>
+              <div>
+                <h1 className=" text-white mb-3 animate__animated animate__fadeInDown" style={{fontSize:'30px'}}>
+                  {movie1.title}
+                </h1>
+                <h1 className=" px-5 text-xl animate__animated animate__bounceIn">Releasing on :</h1>
+                <h1 className=" px-5 text-xl animate__animated animate__bounceIn">{movie1.release_date}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      <div className="carousel-item position-relative" style={{ height: '600px' }}>
+        <img className="position-absolute w-100 h-100" src={imageUrl+movie2.poster_path} style={{ objectFit: 'cover', filter: 'brightness(30%)' }} />
+        <div className="carousel-caption d-flex align-items-center ml-20">
+          <div className="p-3" style={{ maxWidth: '700px' }}>
+            <div className="d-flex align-items-center">
+              <div className="product-img position-relative overflow-hidden mr-3">
+                <img className="img-fluid w-80" src={`${imageUrl+movie2.poster_path}`} />
+              </div>
+              <div>
+       <h1 className=" text-white mb-3 animate__animated animate__fadeInDown" style={{fontSize:'30px'}}>
+    {movie2.title}
+      </h1>
+      <h1 className=" px-5 text-xl animate__animated animate__bounceIn">Releasing on :</h1>
+                <h1 className=" px-5 text-xl animate__animated animate__bounceIn">{movie2.release_date}</h1>
+      </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="carousel-item position-relative" style={{ height: '600px' }}>
+        <img className="position-absolute w-100 h-100" src={imageUrl+movie3.poster_path} style={{ objectFit: 'cover', filter: 'brightness(30%)' }} />
+        <div className="carousel-caption d-flex align-items-center ml-20">
+          <div className="p-3" style={{ maxWidth: '700px' }}>
+            <div className="d-flex align-items-center">
+              <div className="product-img position-relative overflow-hidden mr-3">
+                <img className="img-fluid w-80" src={`${imageUrl+movie3.poster_path}`} />
+              </div>
+              <div>
+                <h5 className=" text-white mb-3 animate__animated animate__fadeInDown" style={{fontSize:'30px'}}>
+                  {movie3.title}
+                </h5>
+                <h1 className=" px-5 text-xl animate__animated animate__bounceIn">Releasing on :</h1>
+                <h1 className=" px-5 text-xl animate__animated animate__bounceIn">{movie3.release_date}</h1>
+      </div>
+    </div>
+  </div>
+</div>
+        </div>
+      </div>
     </MDBCarousel>
     </div>
   );

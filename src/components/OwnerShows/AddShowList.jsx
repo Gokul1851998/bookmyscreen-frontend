@@ -3,7 +3,7 @@ import { addShow, deleteShow, editShow, getMovieName, getSelectScreen, getShows 
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
-const perPage = 4;
+const perPage = 8;
 function formatDate(dateString) {
   const date = new Date(dateString);
   return `${date.getUTCDate().toString().padStart(2, '0')}--${(date.getUTCMonth()+1).toString().padStart(2, '0')}--${date.getUTCFullYear()}`;

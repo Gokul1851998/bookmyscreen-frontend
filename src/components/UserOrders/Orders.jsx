@@ -8,20 +8,19 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 function Orders() {
     const user = useSelector(state => state.users)
+    const current =new Date()
     const navigate = useNavigate()
     const [order,setOrder] = useState([])
-    
+  
     useEffect(() => {
         const fetchData = async () => {
             if(user){
         const response = await getOrder(user.user._id)
         if(response.success){
-          
             setOrder(response.data)
         }else{
          toast.error('Something went wrong')
         }
-        
         }
     }
         fetchData()
@@ -55,67 +54,247 @@ function Orders() {
       
   return (
  
-    <section className="">
-    <div className="container">
-      <h1 className="ml-5 text-uppercase " style={{ fontWeight: 'bolder',fontSize:'25px' }}>Your Orders</h1>
-      <br />
-     
-      <div className="rowhr">
-        <div className="col-sm-6 col-md-6 col-lg-6">
-          {order && order.map((order) => (
-          <div key={order._id} className="food-card food-card--vertical">
-            <div className="food-card_img">
-              <img src={`https://image.tmdb.org/t/p/w300/${order.image}`} alt="" />
-            </div>
-            <div className="food-card_content">
-              <div className="food-card_title-section">
-                <a className="food-card_title" style={{ fontWeight: 'medium' }}>{order.movieName} ({order.language})</a>
-                <a className="text-xl" style={{ fontWeight: '' }}>
-                  Screen - {order.screen}
-                </a>
-                <br />
-                <a className="text-lg" style={{ fontWeight: 'bolder' }}>
-                  {order.selectedSeats.map((seat) => seat.id).join(', ')}
-                </a>
-              </div>
-              <div className="food-card_bottom-section">
-                <div>
-                  {order.ownerName} | {order.location}
-                </div>
-                <div className="space-between">
-                  <div>
-                    {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                  </div>
-                  <div className="pull-right">
-                    <span className="text-lg">{order.showTime}</span>
-                  </div>
-                </div>
-                <hr />
-                <div className="space-between">
-                  <h2>Qyt: <b>{order.selectedSeats.length}</b></h2>
-                  <div className="food-card_price">
-                    <span>Rs. {order.total}</span>
-                  </div>
-                </div>
-              </div>
-              {order.status === 'Booked' ? (
-             <div className="food-card_button-section">
-             <button onClick={() => handelTicket(order._id)} className="badge badge-success text-lg mr-2">View Ticket</button>
-              <button onClick={() => handelCancel(order._id)} className="badge badge-danger text-lg mt-2">Cancel</button>
-            </div>
-            ) : (
-              <button className="badge badge-danger text-lg mt-2 w-100">Canceled</button>
-            )}
+//     <section className="">
+//     <div className="container">
+//       <div className="rowhr">
+//       <div className="col-sm-12 col-md-6 col-lg-4">
+//   <h1 className="ml-5 pb-2 text-uppercase " style={{ fontWeight: 'bolder', fontSize: '20px' }}>Upcoming Bookings</h1>
+//   {order && order.map((order) => {
+//     if (order.paymentstatus == 'Active') {
+//       return (
+      
+//         <div key={order._id} className="food-card food-card--vertical" >
+//           <div className="food-card_img">
+//             <img src={`https://image.tmdb.org/t/p/w300/${order.image}`} alt="" />
+//           </div>
+//           <div className="food-card_content">
+//             <div className="food-card_title-section">
+//               <a className="food-card_title" style={{ fontWeight: 'medium' }}>{order.movieName} ({order.language})</a>
+//               <a className="text-md" style={{ fontWeight: '' }}>
+//                 Screen - {order.screen}
+//               </a>
+//               <br />
+//               <a className="text-md" style={{ fontWeight: 'bolder' }}>
+//                 {order.selectedSeats.map((seat) => seat.id).join(', ')}
+//               </a>
+//             </div>
+//             <div className="food-card_bottom-section">
+//               <div>
+//                 {order.ownerName} | {order.location}
+//               </div>
+//               <div className="space-between ">
+//                 <div>
+//                   {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+//                 </div>
+//                 <div className="pull-right">
+//                   <span className="text-md">{order.showTime}</span>
+//                 </div>
+//               </div>
+//               <hr />
+//               <div className="space-between">
+//                 <h2>Qyt: <b>{order.selectedSeats.length}</b></h2>
+//                 <div className="food-card_price">
+//                   <span>Rs. {order.total}</span>
+//                 </div>
+//               </div>
+//             </div>
+//             {order.status === 'Booked' ? (
+//               <div className="food-card_button-section">
+//                 <button style={{ width: '80px', height: '30px' }} onClick={() => handelTicket(order._id)} className="badge badge-success text-md mr-2">View Ticket</button>
+//                 <button style={{ width: '80px', height: '30px' }}  onClick={() => handelCancel(order._id)} className="badge badge-danger text-md mt-2">Cancel</button>
+//               </div>
+//             ) : (
+//               <button style={{ width: '80px', height: '30px' }}  className="badge badge-danger text-md mt-2 w-100">Canceled</button>
+//             )}
+//           </div>
+//         </div>
+//       );
+//     } else {
+//       return null;
+//     }
+//   })}
+// </div>
 
-              
-            </div>
-          </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
+
+
+//         <div className="col-sm-12 col-md-6 col-lg-4">
+//         <h1 className="ml-5 pb-2 text-uppercase " style={{ fontWeight: 'bolder',fontSize:'20px' }}>Previous Bookings</h1>
+//         {order && order.slice(0, 5).map((order) => {
+//               if (order.paymentstatus == 'Expired') {
+//       return (
+      
+//         <div key={order._id} className="food-card food-card--vertical" style={{ objectFit: 'cover', filter: 'brightness(70%)' }}>
+//           <div className="food-card_img">
+//             <img src={`https://image.tmdb.org/t/p/w300/${order.image}`} alt="" />
+//           </div>
+//           <div className="food-card_content">
+//             <div className="food-card_title-section">
+//               <a className="food-card_title" style={{ fontWeight: 'medium' }}>{order.movieName} ({order.language})</a>
+//               <a className="text-md" style={{ fontWeight: '' }}>
+//                 Screen - {order.screen}
+//               </a>
+//               <br />
+//               <a className="text-md" style={{ fontWeight: 'bolder' }}>
+//                 {order.selectedSeats.map((seat) => seat.id).join(', ')}
+//               </a>
+//             </div>
+//             <div className="food-card_bottom-section">
+//               <div>
+//                 {order.ownerName} | {order.location}
+//               </div>
+//               <div className="space-between">
+//                 <div>
+//                   {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+//                 </div>
+//                 <div className="pull-right">
+//                   <span className="text-md">{order.showTime}</span>
+//                 </div>
+//               </div>
+//               <hr />
+//               <div className="space-between">
+//                 <h2>Qyt: <b>{order.selectedSeats.length}</b></h2>
+//                 <div className="food-card_price">
+//                   <span>Rs. {order.total}</span>
+//                 </div>
+//               </div>
+//             </div>
+//             {order.paymentstatus === 'Expired' ?   (
+//     <button style={{ width: '80px', height: '30px' }}  className="badge badge-warning text-white text-md mt-2 w-100">Expired</button>
+//   ): null
+// }
+//           </div>
+//         </div>
+//       );
+//     } else {
+//       return null;
+//     }
+//   })}
+//         </div>
+//       </div>
+
+
+      
+//     </div>
+//   </section>
+<div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-6xl mx-auto ">
+<div className="flex justify-between gap-4">
+  <div className="flex-1 mr-1 ml-1" >
   
+  <h1 className=" pb-3 text-uppercase " style={{ fontWeight: 'bolder', fontSize: '3vh' }}>Upcoming Bookings</h1>
+  {order && order.map((order) => {
+    if (order.paymentstatus == 'Active') {
+      return (
+      
+        <div key={order._id} className="food-card food-card--vertical" >
+          <div className="food-card_img">
+            <img src={`https://image.tmdb.org/t/p/w300/${order.image}`} alt="" />
+          </div>
+          <div className="food-card_content">
+            <div className="food-card_title-section">
+              <a className="food-card_title" style={{ fontWeight: 'medium' }}>{order.movieName} ({order.language})</a>
+              <a className="text-md" style={{ fontWeight: '' }}>
+                Screen - {order.screen}
+              </a>
+              <br />
+              <a className="text-md" style={{ fontWeight: 'bolder' }}>
+                {order.selectedSeats.map((seat) => seat.id).join(', ')}
+              </a>
+            </div>
+            <div className="food-card_bottom-section">
+              <div>
+                {order.ownerName} | {order.location}
+              </div>
+              <div className="space-between ">
+                <div>
+                  {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </div>
+                <div className="pull-right">
+                  <span className="text-md">{order.showTime}</span>
+                </div>
+              </div>
+              <hr />
+              <div className="space-between">
+                <h2>Qyt: <b>{order.selectedSeats.length}</b></h2>
+                <div className="food-card_price">
+                  <span>Rs. {order.total}</span>
+                </div>
+              </div>
+            </div>
+            {order.status === 'Booked' ? (
+              <div className="food-card_button-section">
+                <button style={{ width: '80px', height: '30px' }} onClick={() => handelTicket(order._id)} className="badge badge-success text-md mr-2">View Ticket</button>
+                <button style={{ width: '80px', height: '30px' }}  onClick={() => handelCancel(order._id)} className="badge badge-danger text-md mt-2">Cancel</button>
+              </div>
+            ) : (
+              <button style={{ width: '80px', height: '30px' }}  className="badge badge-danger text-md mt-2 w-100">Canceled</button>
+            )}
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  })}
+
+  </div>
+  <div className="flex-1 mr-1 ml-1" >
+ 
+        <h1 className=" pb-3 text-uppercase " style={{ fontWeight: 'bolder', fontSize: '3vh' }}>Previous Bookings</h1>
+        {order && order.slice(0, 5).map((order) => {
+              if (order.paymentstatus == 'Expired') {
+      return (
+      
+        <div key={order._id} className="food-card food-card--vertical" style={{ filter: 'brightness(70%)' }}>
+          <div className="food-card_img">
+            <img src={`https://image.tmdb.org/t/p/w300/${order.image}`} alt="" />
+          </div>
+          <div className="food-card_content">
+            <div className="food-card_title-section">
+              <a className="food-card_title" style={{ fontWeight: 'medium' }}>{order.movieName} ({order.language})</a>
+              <a className="text-md" style={{ fontWeight: '' }}>
+                Screen - {order.screen}
+              </a>
+              <br />
+              <a className="text-md" style={{ fontWeight: 'bolder' }}>
+                {order.selectedSeats.map((seat) => seat.id).join(', ')}
+              </a>
+            </div>
+            <div className="food-card_bottom-section">
+              <div>
+                {order.ownerName} | {order.location}
+              </div>
+              <div className="space-between">
+                <div>
+                  {new Date(order.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </div>
+                <div className="pull-right">
+                  <span className="text-md">{order.showTime}</span>
+                </div>
+              </div>
+              <hr />
+              <div className="space-between">
+                <h2>Qyt: <b>{order.selectedSeats.length}</b></h2>
+                <div className="food-card_price">
+                  <span>Rs. {order.total}</span>
+                </div>
+              </div>
+            </div>
+            {order.paymentstatus === 'Expired' ?   (
+    <button style={{ width: '80px', height: '30px' }}  className="badge badge-warning text-white text-md mt-2 w-100">Expired</button>
+  ): null
+}
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  })}
+        </div>
+  </div>
+
+
+</div>
 
   
   )

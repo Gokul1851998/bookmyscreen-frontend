@@ -34,8 +34,7 @@ import { getHomeMovies } from '../../api/movie/movie';
     
     if (movies.length === 0) { // Only run if movies haven't been fetched yet
       fetchData();
-    }
-    
+    }  
   }, [movies]);
   
  const singlePage=(movieId)=>{

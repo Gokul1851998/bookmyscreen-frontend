@@ -10,6 +10,7 @@ import OwnerManagement from '../../pages/Admin/OwnerManagement/OwnerManagement'
 import AdminOwners from '../../pages/Admin/TheatreMangement/AdminOwners'
 import MovieManagement from '../../pages/Admin/MovieManagement/MovieManagement'
 import AdminOrders from '../../pages/Admin/AllOrders/AdminOrders'
+import AdminSailsReport from '../../pages/Admin/SailsReport/AdminSailsReport'
 
  function AdminRoute() {
   return (
@@ -22,6 +23,7 @@ import AdminOrders from '../../pages/Admin/AllOrders/AdminOrders'
         <Route path='/ownerManagement' element={<ProtectedRouteAdmin><AdminOwners/></ProtectedRouteAdmin>}/>
         <Route path='/adminMovies' element={<ProtectedRouteAdmin><MovieManagement/></ProtectedRouteAdmin>}/>
         <Route path='/all-orders' element={<ProtectedRouteAdmin><AdminOrders/></ProtectedRouteAdmin>}/>
+        <Route path='/sails-report' element={<ProtectedRouteAdmin><AdminSailsReport/></ProtectedRouteAdmin>}/>
         </Routes>
       
     </div>

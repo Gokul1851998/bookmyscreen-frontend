@@ -145,13 +145,13 @@ const {
            prepareRow(row)
            return(
               <tr {...row.getRowProps()} >
-                <td className="px-6 py-4 whitespace-nowrap" >
+                <td className="px-6 py-4 font-semibold text-center" >
                 {+row.id + 1 }
                 </td>
 
                 {
                 row.cells.map((cell)=>{
-                  return <td className="px-6 py-4 whitespace-nowrap" {...cell.getCellProps()}>
+                  return <td className="px-6 py-4 font-semibold text-center" {...cell.getCellProps()}>
                     {cell.render('Cell')}
                 </td>
                   })

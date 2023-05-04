@@ -12,9 +12,9 @@ function App(){
   const {loading} = useSelector((state) => state.loaders)
   return (
     <Fragment>
-      {/* {loading && 
+      {loading && 
         <Loader/>
-      } */}
+      }
       <BrowserRouter>
       <Toaster/>
         <Routes>

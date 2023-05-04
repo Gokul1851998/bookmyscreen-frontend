@@ -10,7 +10,7 @@ function ProtectedRouteOwner(props) {
   const GetCurrentOwner = async()=>{
     try {
       const response = await getCurrentOwner()
-      if(response.success){
+      if(response.success){ 
         dispatch(setOwner(response.data))
       }else{
         dispatch(setOwner(null))

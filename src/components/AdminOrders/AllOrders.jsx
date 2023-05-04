@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import './AllOrders.css'
-
+const perPage = 6;
  function AllOrders() {
     const navigate = useNavigate()
     const [orders,setOrders] = useState([])
@@ -24,6 +24,22 @@ import './AllOrders.css'
         fetchData();
     },[])
      
+    const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * perPage;
+ 
+  const endIndex = startIndex + perPage;
+  const displayedMovies = orders.slice(startIndex, endIndex);
+ 
+  const totalPages = Math.ceil(orders.length / perPage);
+
+  const handlePrevClick = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextClick = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
     const handleOrder = async(orderId)=>{
         setModal(true)
         const response = await viewOrder(orderId)
@@ -63,7 +79,7 @@ import './AllOrders.css'
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {orders.map((order, index) => (
+          {displayedMovies.map((order, index) => (
             <tr key={order._id} >
               <td className="px-6 py-4 whitespace-nowrap">
                 { index + 1}
@@ -107,14 +123,16 @@ import './AllOrders.css'
       <button
         type="button"
           className="inline-block rounded  mr-4"
-         
+          onClick={handlePrevClick}
+          disabled={currentPage === 1}
          >
          <i className="fas fa-chevron-left" style={{fontSize: '1.5em'}}></i>
        </button>
          <button
         type="button"
          className="inline-block rounded "
-       
+         onClick={handleNextClick}
+         disabled={currentPage === totalPages}
          >
        <i className="fas fa-chevron-right" style={{fontSize: '1.5em'}}></i>
 

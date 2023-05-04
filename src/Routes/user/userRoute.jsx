@@ -12,6 +12,8 @@ import UserOrder from '../../pages/User/Orders/UserOrder'
 import UserTicket from '../../pages/User/Ticket/UserTicket'
 import UserWallet from '../../pages/User/Wallet/UserWallet'
 import Success from '../../pages/User/PaymentSuccess/Success'
+import UserChat from '../../pages/User/UserChat/UserChat'
+import UserProfile from '../../pages/User/Profile/UserProfile'
 
  function UserRoute() {
   return (
@@ -27,6 +29,8 @@ import Success from '../../pages/User/PaymentSuccess/Success'
         <Route exact path='/ticket' element={<ProtectedRouteUser><UserTicket/></ProtectedRouteUser>}/>
         <Route exact path='/wallet' element={<ProtectedRouteUser><UserWallet/></ProtectedRouteUser>}/>
         <Route exact path='/success' element={<ProtectedRouteUser><Success/></ProtectedRouteUser>}/>
+        <Route exact path='/chat' element={<ProtectedRouteUser><UserChat/></ProtectedRouteUser>}/>
+        <Route exact path='/profile' element={<ProtectedRouteUser><UserProfile/></ProtectedRouteUser>}/>
         </Routes>
       
     </div>

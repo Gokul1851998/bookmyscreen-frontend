@@ -93,3 +93,42 @@ export const viewOrder = async(payload) =>{
         return error.response
     }
 }
+
+export const getStatus = async() =>{
+    try{
+        const response = await axios.get(`${adminUrl}get-status`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getSuccessOrder = async() =>{
+    try{
+        const response = await axios.get(`${adminUrl}get-successOrder`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getMonthlySails = async() =>{
+    try{
+        const response = await axios.get(`${adminUrl}get-monthlySails`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getDailySails = async() =>{
+    try{
+        const response = await axios.get(`${adminUrl}get-dailySails`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+
+

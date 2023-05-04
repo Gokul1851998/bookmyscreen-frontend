@@ -2,20 +2,27 @@ import React, { useEffect } from 'react'
 import './Wallet.css'
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { getWallet } from '../../api/user/users';
+import { toast } from 'react-hot-toast';
 
 function Wallet() {
     const user = useSelector(state => state.users.user);
-    const [amount,setAmount] = useState(0)
-    const [transaction,setTransaction] = useState([])
+    const [users,setUsers] = useState()
+    const [wallet,setWallet]= useState()
      useEffect(()=>{
-      const fetchData = async () => {
-        if(user){
-            setAmount(user.wallet)
-            setTransaction(user.transaction)
-        }
-      }
-      fetchData()
-        window.scrollTo(0, 0)
+         const fetchData = async()=>{
+          if(user){
+            const response = await getWallet(user)
+            console.log(response.data);
+            if(response.success){
+             setUsers(response.data)
+             setWallet(response.data.wallet.toFixed(2))
+            }else{
+              toast.error(response.message)
+            }
+          }
+         }
+         fetchData()
      },[user])
   return (
     <>
@@ -32,7 +39,7 @@ function Wallet() {
                   My Balance
                 </div>
                 <div className="summary-balance">
-                  ₹ {amount}
+                  ₹ {wallet}
                 </div>
                 
               </div>
@@ -42,12 +49,14 @@ function Wallet() {
       <div className="content">
              
       <div className="transactions"><span className="t-desc">Recent Transactions</span>
-      {transaction.map((amount)=>(
+      {users?.transaction?.map((amount)=>(
          <div className="transaction">
      <div className="t-icon-container"><img src="https://pbs.twimg.com/profile_images/1271385506505347074/QIc_CCEg_400x400.jpg" className="t-icon" /></div>
      <div className="t-details">
        <div className="t-title ">Razorpay </div>
-       <div className="t-time">  {amount.date}
+       <div className="t-time"> {new Date(amount.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+       </div>
+       <div className="t-time"> {new Date(amount.date).toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', hour12: true })}
        </div>
      </div>
      {amount.amount > 0 ? (

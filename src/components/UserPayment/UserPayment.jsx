@@ -80,7 +80,8 @@ import Swal from 'sweetalert2'
                    if (order.success) {
                     toast.success(order.message)
                     setPayment(false)
-                    navigate('/')
+                    const orderId = order.data
+                    navigate('/success',{state:orderId})
                    }else{
                     toast.error('Something went wrong')
                    }

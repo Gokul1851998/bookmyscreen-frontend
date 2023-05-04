@@ -110,3 +110,31 @@ export const getBalance = async(payload) => {
         return error.response
     }
 }
+
+export const getWallet = async(payload)=>{
+    try{
+        const response = await axios.post(`${userUrl}get-wallet`,(payload),{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getSearch = async(payload)=>{
+    try{
+        const response = await axios.get(`${userUrl}get-search/${payload}`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+
+export const getEditProfile = async(payload)=>{
+    try{
+        const response = await axios.post(`${userUrl}edit-profile`,(payload),{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}

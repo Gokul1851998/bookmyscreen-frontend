@@ -4,7 +4,8 @@ import { addMovieDetails,getMovies,deleteMovie } from '../../api/admin/admin';
 import { getMoviename ,getMovieDetailsByName } from '../../api/movie/movie';
 import Swal from 'sweetalert2';
 import './AdminMovies.css'
-const perPage = 6;
+import { imageUrl } from '../../constants/constants';
+const perPage = 6
  function AdminMovies() {
     const [movies,setMovies] = useState([])
     const [movieModal,setMovieModal] = useState(false)
@@ -101,9 +102,10 @@ const perPage = 6;
     <table className="table-auto min-w-full divide-y divide-gray-300" style={{ border: "0.5px solid black" }}>
         <thead className="bg-gray-900 text-white">
           <tr>
-            <th className="px-6 py-4 text-left font-semibold uppercase">No</th>
-            <th className="px-6 py-4 text-left font-semibold uppercase">Movie Id</th>
-            <th className="px-6 py-4 text-left font-semibold uppercase">Title</th>
+            <th className="px-6 py-4 text-center font-semibold uppercase">No</th>
+            <th className="px-6 py-4 text-center font-semibold uppercase"></th>
+            <th className="px-6 py-4 text-center font-semibold uppercase">Movie Id</th>
+            <th className="px-6 py-4 text-center font-semibold uppercase">Title</th>
             <th className="px-6 py-4 text-center font-semibold uppercase">Language</th>
             <th className="px-6 py-4 text-center font-semibold uppercase">Release Date</th>
             <th className="px-6 py-4 text-center font-semibold uppercase">Action</th>
@@ -113,22 +115,27 @@ const perPage = 6;
         <tbody className="divide-y divide-gray-200">
           {displayedMovies.map((movie, index) => (
             <tr key={movie._id} >
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 font-semibold text-center">
                 {startIndex + index + 1}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+               <td className="px-6 py-4 font-semibold text-center">
+               <img src={imageUrl + movie.image}
+            className="w-20 h-30 object-cover object-center"
+          />
+              </td>
+              <td className="px-6 py-4 font-semibold text-center">
                 {movie.movieId}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 font-semibold text-center">
                 {movie.title}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 font-semibold text-center">
                 {movie.language}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 font-semibold text-center">
                 {movie.releaseDate}
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-6 py-4 font-semibold text-center">
               <button
                    onClick={()=>handledeleteMovie(movie._id)}
                     type="button"
@@ -170,14 +177,14 @@ const perPage = 6;
     <h1 className='font-semibold large-heading pb-2'>Add Movies</h1>
       <hr/>
       <div className="container ">
-        <label htmlFor="uname mb-5" className='pb-3'><strong>Movie Name</strong></label>
+       
         <hr/>
         <input type="text" placeholder="Enter Movie Name" name="uname" required
           autocomplete="off"
           value={inputValue}
           onChange={(e) => handleInputChange(e)} />
       </div>
-      <div className="dropdown w-52">
+      <div className="dropdow w-52">
                             {suggestions
                             .filter((item) => {
                             const searchTerm = inputValue.toLowerCase();

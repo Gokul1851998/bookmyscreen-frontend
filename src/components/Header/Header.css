@@ -14,7 +14,27 @@
    
 }
 
-
+.dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 1;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	padding: 0.5rem 0;
+  }
+  
+  .dropdown-row {
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+  }
+  
+  .dropdown-row:hover {
+	background-color: #f5f5f5;
+  }
+  
 
 	.card{
 	height: 370px;

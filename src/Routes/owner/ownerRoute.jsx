@@ -9,6 +9,8 @@ import ProtectedRouteOwner from '../../components/ProtectRouteOwner/ProtectRoute
 import OwnerScreenMangement from '../../pages/Owner/OwnerScreenManagement/OwnerScreenMangement'
 import OwnerShows from '../../pages/Owner/OwnerShows/OwnerShows'
 import OwnerBookings from '../../pages/Owner/OwnerBookings/OwnerBookings'
+import OwnerSailsReport from '../../pages/Owner/OwnerSailsReport/OwnerSailsReport'
+import OwnerChat from '../../pages/Owner/OwnerChat/OwnerChat'
 
  function OwnerRoute() {
   return (
@@ -20,6 +22,8 @@ import OwnerBookings from '../../pages/Owner/OwnerBookings/OwnerBookings'
     <Route path='/ownerScreen' element={<ProtectedRouteOwner><OwnerScreenMangement/></ProtectedRouteOwner>}/>
     <Route path='/ownerShows' element={<ProtectedRouteOwner><OwnerShows/></ProtectedRouteOwner>}/>
     <Route path='/ownerBookings' element={<ProtectedRouteOwner><OwnerBookings/></ProtectedRouteOwner>}/>
+    <Route path='/owner-sailsReport' element={<ProtectedRouteOwner><OwnerSailsReport/></ProtectedRouteOwner>}/>
+    <Route path='/ownerChat' element={<ProtectedRouteOwner><OwnerChat/></ProtectedRouteOwner>}/>
     </Routes>
  </Fragment>
   )

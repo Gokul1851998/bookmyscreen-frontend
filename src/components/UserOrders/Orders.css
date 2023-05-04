@@ -61,7 +61,7 @@
 }
 
 .food-card .food-card_content .food-card_title-section .food-card_title {
-    font-size: 24px;
+    font-size: 18px;
     color: #333;
     font-weight: 500;
     display: block;
@@ -113,11 +113,11 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    font-size: 13px;
+    font-size: 10px;
 }
 
 .food-card .food-card_content .food-card_bottom-section .food-card_price {
-    font-size: 28px;
+    font-size: 18px;
     font-weight: 500;
     color: #F47A00;
 }
@@ -147,7 +147,7 @@
         display: -ms-flexbox;
         display: flex;
         position: relative;
-        height: 280px;
+        height: 240px;
     }
 
     .food-card--vertical .food-card_img img {
@@ -160,7 +160,9 @@
 
 .rowhr {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    
     
   }
+  
+

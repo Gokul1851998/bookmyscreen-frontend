@@ -1,16 +1,15 @@
 import React from 'react'
 import Header from '../../../components/Header/Header'
 import Footer from '../../../components/Footer/Footer'
-import SelectTime from '../../../components/SelectShow/SelectTime'
-
-function ShowDetails() {
+import Profile from '../../../components/UserProfile/Profile'
+ function UserProfile() {
   return (
     <div>
       <Header/>
-      <div style={{minHeight:'100vh'}}><SelectTime/></div>
+      <div  style={{minHeight:'100vh'}}><Profile/></div>
       <Footer/>
     </div>
   )
 }
 
-export default ShowDetails
+export default UserProfile

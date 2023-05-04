@@ -1,12 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import Transition from './Transition';
+import { setOwner } from '../../redux/ownersSlice';
+import { useDispatch } from 'react-redux';
 
 
 
 function UserMenu() {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const logoutOwner = () => {
+    dispatch(setOwner(null))
     localStorage.removeItem("ownerToken");
     navigate("/owner");
   };

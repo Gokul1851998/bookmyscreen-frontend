@@ -3,16 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import "tailwindcss/tailwind.css";
 import axios from 'axios';
 import { adminUrl } from '../../../apiLinks/apiLinks';
+import { useEffect } from 'react';
+import { getStatus } from '../../api/admin/admin';
 
  function AdminLogin() {
   const [loginEmail,setLoginEmail] = useState('');
   const [loginPassword,setLoginPassword] = useState('')
+
   const navigate = useNavigate()
+
+
 
   function login(){
       axios.post(`${adminUrl}adminlogin`,{password:loginPassword,email:loginEmail}).then((response)=>{
           if(response.data.login){ 
               localStorage.setItem('adminToken', response.data.token);
+
               navigate('/admin/dashboard')
           }
       })
