@@ -15,7 +15,6 @@ import {
 const AdminDashboard = () => {
   const [series, setSeries] = useState([]);
   const [monthy,setMonthy]=useState([])
-  const [daily,setDaily] = useState()
   const [data,setData] = useState([])
   const clonedArray = [...monthy]
  
@@ -27,7 +26,6 @@ const AdminDashboard = () => {
       setMonthy(response1.data)
       const response2 = await getDailySails()
       console.log(response2);
-      setDaily(response2.data.daily[0].total)
       setData(response2.data)
     };
     fetchData();
@@ -117,7 +115,7 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         <div className="flex-none w-2/3 max-w-full px-3">
           <div>
           <p className="mb-0 font-sans font-bold leading-normal text-md">Daily sail</p>
-            <h3 className="font-bold text-2xl text-green-600">Rs.{daily}</h3>
+            <h3 className="font-bold text-2xl text-green-600">Rs.{data.total}</h3>
           
           </div>
         </div>
