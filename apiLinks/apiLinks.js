@@ -6,4 +6,4 @@
 export const userUrl='https://bookmyscreen.onrender.com/' 
 export const ownerUrl = 'https://bookmyscreen.onrender.com/owner/'
 export const adminUrl ='https://bookmyscreen.onrender.com/admin/'
-export const movieUrl ='https://api.themoviedb.org/3'
+export const movieUrl ='https://api.themoviedb.org/3' 
