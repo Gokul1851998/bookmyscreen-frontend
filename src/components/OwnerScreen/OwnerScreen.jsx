@@ -77,7 +77,6 @@ function OwnerScreen() {
 
   const handleAccept = async (e) => {
     e.preventDefault();
-   
     const response = await addScreen(screenData);
     if (response.success) {
       console.log(response);
