@@ -44,8 +44,8 @@ import { getHomeMovies } from '../../api/movie/movie';
   return (
      <Fragment>
       <div className="relative pb-4 pl-6 pt-10 flex w-full max-w-[26rem] flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
-        <h1 className="text-black  " style={{ fontWeight: 'bold',fontSize:'4vh',fontFamily:'Arial, sans-serif' }}>
-         Recommented Movies
+        <h1 className="text-black  " style={{ fontWeight: 'bold',fontSize:'24px',fontFamily:'Arial, sans-serif' }}>
+         Available Movies
        </h1> 
       </div>
    

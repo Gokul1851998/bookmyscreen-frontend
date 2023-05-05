@@ -196,45 +196,39 @@ const singlePage=(movieId)=>{
   return (
     <header className="bg-gray-800">
        <Toaster />
-        <div>
-        <nav className="container mx-auto px-6 py-3">
-      <div className="flex items-center justify-between">
-        <div className="text-white font-bold pl-6 pr-3" style={{fontSize: "24px"}}>
-          <h2>book<span className="text-danger font-bold">my</span>screen</h2>
-        </div>
-        <div className="relative text-gray-600">
-     
-        <input type="search" value={inputValue}
-          onChange={(e) => handleInputChange(e)} name="serch" placeholder="Search" className="bg-white w-60 px-4  rounded-full text-sm focus:outline-none" />
-         
-          {suggestions.length ? (
-            <div className="dropdown w-80">
-              
-            {suggestions
-            .filter((item) => {
-            const searchTerm = inputValue.toLowerCase();
-            const title = item.title.toLowerCase();
 
-            return (
+        <nav class="container mx-auto px-6 py-3">
+  <div class="flex flex-wrap items-center justify-between">
+    <div class="text-white font-bold pl-6 pr-3" style={{ fontSize: "24px" }}>
+      <h2>book<span class="text-danger font-bold">my</span>screen</h2>
+    </div>
+    <div class="relative text-gray-600">
+      <input type="search" value={inputValue} onChange={(e) => handleInputChange(e)} name="search" placeholder="Search" class="bg-white px-4 rounded-full text-sm focus:outline-none" />
+      {suggestions.length ? (
+      <div class="dropdown w-80">
+        {suggestions
+        .filter((item) => {
+          const searchTerm = inputValue.toLowerCase();
+          const title = item.title.toLowerCase();
+
+          return (
             searchTerm &&
             title.startsWith(searchTerm) &&
             title !== searchTerm
-            );
-            })
-            .slice(0, 3)
-            .map((suggestion) => (
-              <div  className="dropdown-row" key={suggestion.title}>
-              <a onClick={()=>singlePage(suggestion.movieId)}>
-              <img src={imageUrl + suggestion.image} className="w-10 h-15 object-cover object-center inline-block mr-2" />
-              <span className="inline-block">{suggestion.title}</span>
-              </a>
-            </div>
-            ))}
-            </div>
-          ):null}
-          
-        
+          );
+        })
+        .slice(0, 3)
+        .map((suggestion) => (
+          <div class="dropdown-row" key={suggestion.title}>
+            <a onClick={() => singlePage(suggestion.movieId)}>
+              <img src={imageUrl + suggestion.image} class="w-10 h-15 object-cover object-center inline-block mr-2" />
+              <span class="inline-block">{suggestion.title}</span>
+            </a>
+          </div>
+        ))}
       </div>
+      ) : null}
+    </div>
       
      
     {islogin?(
@@ -286,7 +280,7 @@ const singlePage=(movieId)=>{
     ):(
 
 <div className="flex pl-2 mr-2">
-<button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-4 rounded" onClick={() => {
+<button className="bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-1 px-3 rounded" onClick={() => {
    setShowModal(true)
  }}>
 Login
@@ -298,7 +292,7 @@ Login
     ) }
       </div>
     </nav>
-        </div>
+    
         <div>
         <nav className="container mx-auto px-6 py-3">
       <div className="flex items-center justify-between">

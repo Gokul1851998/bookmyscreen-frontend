@@ -18,9 +18,10 @@ import { imageUrl } from '../../constants/constants';
         const fetchData = async() => {
           const response = await getMovieDetails(movieId)
           const response2 = await getCastDetails(movieId)
+          console.log(response);
           setMovieDetails(response)
           setGenres(response?.genres)
-          setLanguage(response?.spoken_languages)
+          setLanguage(response?.original_language)
           setCast(response2.cast)
         }
         fetchData();
@@ -54,12 +55,7 @@ import { imageUrl } from '../../constants/constants';
         <h1 style={{ fontSize: '1.2rem' }} 
           className=" text-white mb-1 pl-6   animate__animated animate__fadeInDown">{movieDetails.vote_count} Votes</h1>
           <button className="btn btn-outline-grey mb-3 py-0.5 px-1 mt-3 animate__animated animate__fadeInUp"  style={{color: '#000', backgroundColor: 'white',fontWeight:'bold'}}>
-          {language.map((gen, index) => (
-          <span key={gen.id}>
-          {gen.english_name}
-          {index !== genres.length - 1 && ", "}
-          </span>
-          ))}
+          {language}
           </button><br/>
           <h1 style={{ fontSize: '1.2rem' }} 
           className=" text-white mb-3   animate__animated animate__fadeInDown">
