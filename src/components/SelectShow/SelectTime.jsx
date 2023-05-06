@@ -14,6 +14,7 @@ const [movieDetails,setMovieDetails] = useState([])
 const [language,setLanguage] = useState('')
 const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
 const [movieshows,setMovieshows] = useState([])
+const [loading, setLoading] = useState(false)
 
 const currentDate = new Date();
 const date2 = new Date();
@@ -90,6 +91,7 @@ const handleButtonClick = async(index) => {
   
 }
 useEffect(() => {
+  setLoading(true)
   const fetchData = async () => {
     if (movieId && date) {
       const response = await getMovieDetails(movieId);
@@ -107,6 +109,7 @@ useEffect(() => {
      
       setMovieDetails(response);
       setLanguage(response?.spoken_languages[0]?.english_name);
+      setLoading(false)
     }
   };
   fetchData();

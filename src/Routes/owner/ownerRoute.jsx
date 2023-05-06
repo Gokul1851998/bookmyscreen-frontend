@@ -11,6 +11,7 @@ import OwnerShows from '../../pages/Owner/OwnerShows/OwnerShows'
 import OwnerBookings from '../../pages/Owner/OwnerBookings/OwnerBookings'
 import OwnerSailsReport from '../../pages/Owner/OwnerSailsReport/OwnerSailsReport'
 import OwnerChat from '../../pages/Owner/OwnerChat/OwnerChat'
+import OwnerSingleChat from '../../pages/Owner/OwnerSingleChat/OwnerSingleChat'
 
  function OwnerRoute() {
   return (
@@ -23,7 +24,8 @@ import OwnerChat from '../../pages/Owner/OwnerChat/OwnerChat'
     <Route path='/ownerShows' element={<ProtectedRouteOwner><OwnerShows/></ProtectedRouteOwner>}/>
     <Route path='/ownerBookings' element={<ProtectedRouteOwner><OwnerBookings/></ProtectedRouteOwner>}/>
     <Route path='/owner-sailsReport' element={<ProtectedRouteOwner><OwnerSailsReport/></ProtectedRouteOwner>}/>
-    <Route path='/ownerChat' element={<ProtectedRouteOwner><OwnerChat/></ProtectedRouteOwner>}/>
+    <Route path='/owner-chatList' element={<ProtectedRouteOwner><OwnerChat/></ProtectedRouteOwner>}/>
+    <Route path='/ownerChat' element={<ProtectedRouteOwner><OwnerSingleChat/></ProtectedRouteOwner>}/>
     </Routes>
  </Fragment>
   )

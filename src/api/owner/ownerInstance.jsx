@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ownerUrl } from "../../../apiLinks/apiLinks";
+import { ownerUrl, userUrl } from "../../../apiLinks/apiLinks";
 
 
 export const getCurrentOwner = async() => {
@@ -178,4 +178,30 @@ export const getStatus = async(payload)=>{
                 }
             }
 
+            export const getOwnerUser = async(payload)=>{
+                const token = localStorage.getItem('ownerToken')
+                const headers = { Authorization: `Bearer ${token}` }
+                    try{
+                      const response = await axios.post(`${ownerUrl}get-OwnerUser`,(payload),{headers})
+                      return response.data
+                    }catch (error) {
+                        return error.response
+                    }
+                }
 
+            export const getMessagesForOwner = async(payload)=>{
+                    try{
+                      const response = await axios.post(`${userUrl}message/get-Ownermessage`,(payload))
+                      return response.data
+                    }catch (error) {
+                        return error.response
+                    }  
+            }
+            export const sentMessagesToUser = async(payload)=>{
+                try{
+                  const response = await axios.post(`${userUrl}message/sent-messageToUser`,(payload))
+                  return response.data
+                }catch (error) {
+                    return error.response
+                }  
+        }

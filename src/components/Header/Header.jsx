@@ -196,14 +196,15 @@ const singlePage=(movieId)=>{
   return (
     <header className="bg-gray-800">
        <Toaster />
-
+       
+      
         <nav class="container mx-auto px-6 py-3">
   <div class="flex flex-wrap items-center justify-between">
     <div class="text-white font-bold pl-6 pr-3" style={{ fontSize: "24px" }}>
       <h2>book<span class="text-danger font-bold">my</span>screen</h2>
     </div>
     <div class="relative text-gray-600">
-      <input type="search" value={inputValue} onChange={(e) => handleInputChange(e)} name="search" placeholder="Search" class="bg-white px-4 rounded-full text-sm focus:outline-none" />
+      <input type="search" value={inputValue} onChange={(e) => handleInputChange(e)} name="search" placeholder="Search" class="form-control rounded" />
       {suggestions.length ? (
       <div class="dropdown w-80">
         {suggestions
@@ -257,7 +258,7 @@ const singlePage=(movieId)=>{
   <h6 onClick={()=>{navigate('/wallet')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
     Wallet
   </h6>
-  <h6 onClick={()=>{navigate('/chat')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
+  <h6 onClick={()=>{navigate('/chatList')}} className="mt-6 md:mt-10 text-lg md:text-2xl font-semibold text-white cursor-pointer">
     Chat
   </h6>
   <h6

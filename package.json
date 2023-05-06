@@ -57,7 +57,10 @@
     "react-toastify": "^9.1.2",
     "react-transition-group": "^4.4.5",
     "recharts": "^2.5.0",
-    "sweetalert2": "^11.7.3"
+    "socket.io-client": "^4.6.1",
+    "styled-components": "^5.3.10",
+    "sweetalert2": "^11.7.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

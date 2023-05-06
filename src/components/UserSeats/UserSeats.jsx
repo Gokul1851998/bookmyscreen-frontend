@@ -119,20 +119,21 @@ function UserSeats() {
   </div>
 </div>
 
-<div className='seatDetailsDiv grid grid-cols-1 md:grid-cols-3 gap-4 p-3'>
-  <div className='seatAvailable flex justify-center'>
-    <div className='w-4 h-4 bg-black-500 my-1 mr-1 border border-black-900 border-1'></div>
+<div className='seatDetailsDiv flex gap-4'>
+  <div className='seatAvailable flex items-center'>
+    <div className='w-4 h-4 bg-black-500 mr-1 border border-black-900'></div>
     <h1 className='font-semibold'>Available</h1>
   </div>
-  <div className='seatAvailable flex justify-center'>
-    <div className='w-4 h-4 bg-slate-400 my-1 mr-1'></div>
+  <div className='seatAvailable flex items-center'>
+    <div className='w-4 h-4 bg-slate-400 mr-1'></div>
     <h1 className='font-semibold'>Sold</h1>
   </div>
-  <div className='seatAvailable flex justify-center'>
-    <div className='w-4 h-4 bg-green-700 my-1 mr-1'></div>
+  <div className='seatAvailable flex items-center'>
+    <div className='w-4 h-4 bg-green-700 mr-1'></div>
     <h1 className='font-semibold'>Selected</h1>
   </div>
 </div>
+
 
 <div className='theaterScreenDiv'>
   <div className='screenDivInside'>

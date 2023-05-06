@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
-import Chat from '../../../components/OwnerChat/Chat';
 import OwnerHeader from '../../../components/OwnerHeader/OwnerHeader';
 import OwnerFooter from '../../../components/OwnerFooter/OwnerFooter';
 import OwnerSidebar from '../../../components/OwnerSidebar/OwnerSidebar'
+import OwnerChatList from '../../../components/OwnerChat/OwnerChatList';
 
  function OwnerChat() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -11,7 +11,7 @@ import OwnerSidebar from '../../../components/OwnerSidebar/OwnerSidebar'
       <OwnerHeader sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex flex-row" style={{minHeight:'100vh'}}>
       <OwnerSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <Chat/>
+      <OwnerChatList/>
       </div>
       <OwnerFooter/>
     </div>

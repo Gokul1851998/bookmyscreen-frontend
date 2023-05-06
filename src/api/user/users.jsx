@@ -1,10 +1,10 @@
 import { userUrl } from "../../../apiLinks/apiLinks";
 import axios from "axios";
-const token =  localStorage.getItem("userToken")
-const headers = { Authorization: `Bearer ${token}` }
 
 export const getCurrentUser = async()=>{
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}getcurrentuser`,{headers})
         return response.data
     } catch (error) {
@@ -41,6 +41,8 @@ export const getSeats = async(payload) => {
 
 export const getBill = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}get-bill`,(payload),{headers})
         return response.data
     } catch (error) {
@@ -50,6 +52,8 @@ export const getBill = async(payload) => {
 
 export const getPayment = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}get-payment/${payload}`,{headers})
         return response.data
     } catch (error) {
@@ -59,6 +63,8 @@ export const getPayment = async(payload) => {
 
 export const userOrder = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}user-order`,(payload),{headers})
         return response.data
     } catch (error) {
@@ -68,6 +74,8 @@ export const userOrder = async(payload) => {
 
 export const getOrder = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}get-order/${payload}`,{headers})
         return response.data
     } catch (error) {
@@ -77,6 +85,8 @@ export const getOrder = async(payload) => {
 
 export const getSingleorder = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}single-order/${payload}`,{headers})
         return response.data
     } catch (error) {
@@ -86,6 +96,8 @@ export const getSingleorder = async(payload) => {
 
 export const orderCancel = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}cancel-order/${payload}`,{headers})
         return response.data
     } catch (error) {
@@ -95,6 +107,8 @@ export const orderCancel = async(payload) => {
 
 export const getVerify = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}get-verify/${payload}`,{headers})
         return response.data
     } catch (error) {
@@ -104,6 +118,8 @@ export const getVerify = async(payload) => {
 
 export const getBalance = async(payload) => {
     try {
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}get-balance`,(payload),{headers})
         return response.data
     } catch (error) {
@@ -113,6 +129,8 @@ export const getBalance = async(payload) => {
 
 export const getWallet = async(payload)=>{
     try{
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}get-wallet`,(payload),{headers})
         return response.data
     }catch (error) {
@@ -122,6 +140,8 @@ export const getWallet = async(payload)=>{
 
 export const getSearch = async(payload)=>{
     try{
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.get(`${userUrl}get-search/${payload}`,{headers})
         return response.data
     }catch (error) {
@@ -132,7 +152,38 @@ export const getSearch = async(payload)=>{
 
 export const getEditProfile = async(payload)=>{
     try{
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}edit-profile`,(payload),{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getUserOwner = async(payload)=>{
+    try{
+const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
+        const response = await axios.post(`${userUrl}get-userOwner`,(payload),{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getMessagesForUsers = async(payload)=>{
+    try{
+        const response = await axios.post(`${userUrl}message/get-message`,(payload))
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const sentMessagesToOwner = async(payload)=>{
+    try{
+        const response = await axios.post(`${userUrl}message/sent-messageToOwner`,(payload))
         return response.data
     }catch (error) {
         return error.response
