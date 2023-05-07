@@ -26,7 +26,7 @@ import { toast } from 'react-hot-toast'
             <p className="text-gray-600 my-2 text-lg">Thank you for completing your secure online payment.</p>
             <p className='my-2 text-lg'> Have a great day!</p>
             <div className="flex justify-center space-x-8 py-10">
-  <a onClick={()=>navigate('/')} className="px-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3" style={{borderRadius:'10px'}}>
+  <a type='button' onClick={()=>navigate('/')} className="px-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3" style={{borderRadius:'10px'}}>
     GO HOME
   </a>
   <a type='button'onClick={handleBill} className="px-12 bg-rose-500 hover:bg-red-600 text-white font-semibold py-3" style={{borderRadius:'10px'}}> 

@@ -228,7 +228,9 @@ function Orders() {
             ) : (
               <button style={{ width: '80px', height: '30px' }}  className="badge badge-danger text-md mt-2 w-100">Canceled</button>
             )}
+             
           </div>
+          
         </div>
       );
     } else {
