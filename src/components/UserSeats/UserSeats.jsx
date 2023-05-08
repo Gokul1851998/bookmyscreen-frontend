@@ -39,7 +39,7 @@ function UserSeats() {
       }
     }
     fetchData()
-    window.scrollTo(0, 0)
+  
   }, [showId, date])
 
   

@@ -3,7 +3,6 @@ import { imageUrl } from '../../constants/constants';
 import "tailwindcss/tailwind.css";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { hideLoading,showLoading } from '../../redux/loadersSlice';
 import { viewMovie } from '../../api/user/users';
 import { getHomeMovies } from '../../api/movie/movie';
 import Loading from '../Loader/Loading';
@@ -11,15 +10,13 @@ import Loading from '../Loader/Loading';
 
  function Rowpost() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const [loading,setLoading] = useState(true)
   const [movies,setMovies] = useState([])
- 
+
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        dispatch(showLoading());
         const response = await viewMovie();
         const moviePromises = response.data.map(async (movie) => {
           const response2 = await getHomeMovies(movie.movieId);
@@ -27,7 +24,6 @@ import Loading from '../Loader/Loading';
         });
         const movies = await Promise.all(moviePromises);
         setMovies(movies.filter((movie) => movie)); // filter out null or undefined responses
-        dispatch(hideLoading());
        
       } catch (error) {
         console.log("something error");

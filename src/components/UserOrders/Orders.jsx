@@ -12,8 +12,7 @@ function Orders() {
     const navigate = useNavigate()
     const [activeOrders,setActiveOrders] = useState([])
     const [expiredOrders,setExpiredOrders] = useState([])
-    console.log(activeOrders);
-    console.log(expiredOrders);
+
     useEffect(() => {
         const fetchData = async () => {
             if(user){
@@ -27,7 +26,7 @@ function Orders() {
         }
     }
         fetchData()
-        window.scrollTo(0, 0)
+       
       }, [user])
 
     const handelTicket = (orderId) =>{

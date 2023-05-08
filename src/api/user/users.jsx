@@ -64,7 +64,7 @@ const headers = { Authorization: `Bearer ${token}` }
 export const userOrder = async(payload) => {
     try {
         const token =  localStorage.getItem("userToken")
-const headers = { Authorization: `Bearer ${token}` }
+         const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}user-order`,(payload),{headers})
         return response.data
     } catch (error) {

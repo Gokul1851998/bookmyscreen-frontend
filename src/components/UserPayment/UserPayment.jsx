@@ -7,6 +7,7 @@ import { getPicture } from '../../api/movie/movie'
 import { toast } from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import Loading from '../Loader/Loading'
  function UserPayment() {
     const user = useSelector(state => state.users)
     const location = useLocation()
@@ -19,7 +20,8 @@ import Swal from 'sweetalert2'
     const [language,setlanguage] = useState('')
     const [payment,setPayment] = useState(true)
     const [method,setMethod] = useState('')
-
+    const [loading1, setLoading1] = useState(true)
+    const [loading2, setLoading2] = useState(true)
     
 
     useEffect(() => {
@@ -38,8 +40,7 @@ import Swal from 'sweetalert2'
           }
         }
         fetchData()
-        window.scrollTo(0, 0)
-      }, [details])
+      }, [details,user])
     
       const initializePayment = async() => {
         if(method === 'Razorpay'){
@@ -55,7 +56,7 @@ import Swal from 'sweetalert2'
         }
       }else if(method === 'Wallet'){
         const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
-        if(response2.success){
+        if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
           navigate('/success',{state:orderId})
@@ -68,24 +69,22 @@ import Swal from 'sweetalert2'
     }
    
     const handleRazorPay = (order) => {
-        console.log(order)
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler:async function (response) {
-              const order = await userOrder({details,fee,subtotal,total,image,user,language})
-          
-                   if (order.success) {
-                    toast.success(order.message)
-                    setPayment(false)
-                    const orderId = order.data
-                    navigate('/success',{state:orderId})
-                   }else{
-                    toast.error('Something went wrong')
-                   }
+            handler:async function () {
+              const response = await userOrder({details,fee,subtotal,total,image,user,language})
+              console.log(response);
+              if (response.success) {
+               toast.success(response.message)
+               const orderId = response.data
+               navigate('/success',{state:orderId})
+              }else{
+               toast.error('Something went wrong')
+              }
             }
         }
         const rzp = new window.Razorpay(options)
@@ -93,15 +92,30 @@ import Swal from 'sweetalert2'
         
     }
 
+   
+    useEffect(()=>{
+      setTimeout(() => {
+       setLoading1(false)
+      }, 1000);
+     },[image])
+     useEffect(()=>{
+      setTimeout(() => {
+       setLoading2(false)
+      }, 1000);
+     },[language])
+
   return (
     <div >
     <div className="d-flex justify-content-center m-5 " >
         <div className="col-md-5" >
+      
           <div className="right border" style={{backgroundColor:'#fffcdc'}}>
           <div className="header pb-2" style={{ textAlign: "center" }}>Booking Summary</div>
           <hr className="mt-2 mb-2" />
-          
-            <div className="row item">
+            {loading1? (
+              <Loading/>
+            ):(
+              <div className="row item">
               <div className="col-4 align-self-center">
                 <img className="img-fluid" src={`https://image.tmdb.org/t/p/w300/${image}`} />
               </div>
@@ -116,6 +130,8 @@ import Swal from 'sweetalert2'
                 <div className="row text-muted">{details.showDetails.showTime} | {new Date(details.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} </div>
               </div>
             </div>
+            )}
+          
             <div className="line mt-3 mb-3">
              <hr className="new1" />
              </div>

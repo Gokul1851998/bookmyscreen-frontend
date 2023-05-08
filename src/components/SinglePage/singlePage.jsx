@@ -25,7 +25,7 @@ import { imageUrl } from '../../constants/constants';
           setCast(response2.cast)
         }
         fetchData();
-        window.scrollTo(0, 0);
+       
       },[movieId])
       
       const shows=(movieId)=>{

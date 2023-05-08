@@ -26,7 +26,7 @@ function Ticket() {
           }
     }
         fetchData()
-        window.scrollTo(0, 0)
+      
       }, [orderId])
 
   
