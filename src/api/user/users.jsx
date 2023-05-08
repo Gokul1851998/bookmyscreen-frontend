@@ -189,3 +189,25 @@ export const sentMessagesToOwner = async(payload)=>{
         return error.response
     }
 }
+
+export const getLocation = async(payload)=>{
+    try{
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
+        const response = await axios.post(`${userUrl}get-location`,(payload),{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}
+
+export const getTheatreShows = async(payload)=>{
+    try{
+        const token =  localStorage.getItem("userToken")
+const headers = { Authorization: `Bearer ${token}` }
+        const response = await axios.get(`${userUrl}get-theatreShows/${payload}`,{headers})
+        return response.data
+    }catch (error) {
+        return error.response
+    }
+}

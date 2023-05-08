@@ -15,6 +15,8 @@ import Success from '../../pages/User/PaymentSuccess/Success'
 import UserChat from '../../pages/User/UserChat/UserChat'
 import UserProfile from '../../pages/User/Profile/UserProfile'
 import SingleChat from '../../pages/User/Chat/SingleChat'
+import Userlocation from '../../pages/User/Location/Userlocation'
+import TheatreShowlist from '../../pages/User/Theatres/TheatreShowlist'
 
  function UserRoute() {
   return (
@@ -24,6 +26,8 @@ import SingleChat from '../../pages/User/Chat/SingleChat'
         <Route exact path='/singleMoviePage' element={<PublicRouteUser><MoviePage/></PublicRouteUser>}/>
         <Route exact path='/allMovies' element={<PublicRouteUser><Movies/></PublicRouteUser>}/>
         <Route exact path='/shows' element={<PublicRouteUser><ShowDetails/></PublicRouteUser>}/>
+        <Route exact path='/location' element={<PublicRouteUser><Userlocation/></PublicRouteUser>}/>
+        <Route exact path='/theatreShows' element={<PublicRouteUser><TheatreShowlist/></PublicRouteUser>}/>
         <Route exact path='/selectSeats' element={<PublicRouteUser><SelectSeats/></PublicRouteUser>}/>
         <Route exact path='/payment' element={<ProtectedRouteUser><Payment/></ProtectedRouteUser>}/>
         <Route exact path='/orders' element={<ProtectedRouteUser><UserOrder/></ProtectedRouteUser>}/>

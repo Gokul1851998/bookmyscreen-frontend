@@ -11,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import SmallLoader from '../Loader/smallLoader';
 
 const AdminDashboard = () => {
   const [loading1,setLoading1] = useState(true)
@@ -106,7 +107,21 @@ const AdminDashboard = () => {
   }, 0);
   const currentDate = new Date();
 const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month number from 1 to 12
-
+useEffect(()=>{
+  setTimeout(() => {
+   setLoading1(false)
+  }, 3000);
+ },[serie])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading2(false)
+  }, 3000);
+ },[monthy])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading3(false)
+  }, 3000);
+ },[data])
   return (
           <>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
@@ -118,7 +133,9 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         <div className="flex-none w-2/3 max-w-full px-3">
           <div>
           <p className="mb-0 font-sans font-bold leading-normal text-md">Daily sail</p>
-            <h3 className="font-bold text-2xl text-green-600">Rs.{data.total}</h3>
+          {loading3 ? ( <SmallLoader/>) : (
+              <h3 className="font-bold text-2xl text-green-600"> Rs.{data.total}</h3>
+            )}
           
           </div>
         </div>
@@ -138,7 +155,15 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         <div className="flex-none w-2/3 max-w-full px-3">
           <div>
           <p className="mb-0 font-sans font-bold leading-normal text-md">Monthly sail</p>
-            <h3 className="font-bold text-2xl text-yellow-600">Rs.{Math.floor(monthy[currentMonth])}</h3>
+          {
+            loading2 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-2xl text-yellow-600">Rs.{Math.floor(monthy[currentMonth])}</h3>
+            )
+          }
+          
            
           </div>
         </div>
@@ -159,7 +184,16 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
           <div>
           
             <p className="mb-0 font-sans font-bold leading-normal text-md">Yearly sail</p>
-            <h3 className="font-bold text-2xl text-red-600"> Rs.{Math.floor(year)}</h3>
+         
+          {
+            loading1 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-2xl text-red-600"> Rs.{Math.floor(year)}</h3>
+            )
+          }
+          
            
              
            
@@ -203,7 +237,15 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Total Revenue</h5>
-          <h3 className="font-bold text-3xl text-gray-600">Rs.{Math.floor(year)} <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
+          {
+            loading2 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-3xl text-gray-600">Rs.{Math.floor(year)} <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
+            )
+          }
+         
         </div>
       </div>
     </div>
@@ -218,7 +260,15 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Total Users</h5>
-          <h3 className="font-bold text-3xl text-gray-600">{data.userCount} <span className="text-pink-500"><i className="fas fa-exchange-alt" /></span></h3>
+          {
+            loading3 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-3xl text-gray-600">{data.userCount} <span className="text-pink-500"><i className="fas fa-exchange-alt" /></span></h3>
+            )
+          }
+          
         </div>
       </div>
     </div>
@@ -233,7 +283,15 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Total Theatre</h5>
-          <h3 className="font-bold text-3xl text-gray-600">{data.ownerCount}<span className="text-blue-600"><i className="fas fa-exchange-alt" /></span></h3>
+          {
+            loading3 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-3xl text-gray-600">{data.ownerCount}<span className="text-blue-600"><i className="fas fa-exchange-alt" /></span></h3>
+            )
+          }
+         
         </div>
       </div>
     </div>
@@ -249,7 +307,14 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
               </div>
               <div className="flex-1 text-right md:text-center">
                 <h5 className="font-bold uppercase text-gray-400">Running Movies</h5>
-                <h3 className="font-bold text-3xl text-gray-600">{data.movieCount} <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
+                {
+            loading3 ? (
+              <SmallLoader/>
+            ) : (
+              <h3 className="font-bold text-3xl text-gray-600">{data.movieCount} <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
+            )
+          }
+               
               </div>
             </div>
           </div>
@@ -264,7 +329,14 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Active Booking</h5>
-          <h3 className="font-bold text-3xl text-gray-600">{data.activeCount} <span className="text-purple-500"><i className="fas fa-caret-up" /></span></h3>
+          {
+            loading3 ? (
+              <SmallLoader/>
+            ) : (
+              <h3 className="font-bold text-3xl text-gray-600">{data.activeCount} <span className="text-purple-500"><i className="fas fa-caret-up" /></span></h3>
+            )
+          }
+          
         </div>
       </div>
     </div>
@@ -279,7 +351,14 @@ const currentMonth = currentDate.getMonth() ; // Adding 1 to get the month numbe
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Expired Bookings</h5>
-          <h3 className="font-bold text-3xl text-gray-600">{data.expiredCount} <span className="text-yellow-500"><i className="fas fa-caret-down" /></span></h3>
+          {
+            loading3 ? (
+              <SmallLoader/>
+            ) : (
+              <h3 className="font-bold text-3xl text-gray-600">{data.expiredCount} <span className="text-yellow-500"><i className="fas fa-caret-down" /></span></h3>
+            )
+          }
+          
         </div>
       </div>
     </div>

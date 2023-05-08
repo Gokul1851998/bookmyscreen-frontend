@@ -176,9 +176,8 @@ const handleInputChange = async (e) => {
     const value = e.target.value;
     setInputValue(value);
     if (value.trim() !== '') { // check if the input value is not empty
-    
       const response = await getSearch(value);
-      console.log(response.data);
+     
       setSuggestions(response.data);
     } else {
       setSuggestions([]); // clear the suggestions if the input value is empty
@@ -193,8 +192,13 @@ const singlePage=(movieId)=>{
   setSuggestions('')
 }
 
+const locationPage=(location)=>{
+  navigate('/location',{state:location})
+  setSuggestions('')
+}
+
   return (
-    <header className="bg-gray-800">
+    <header className="bg-gray-800 relative z-20">
        <Toaster />
        
       
@@ -203,31 +207,40 @@ const singlePage=(movieId)=>{
     <div class="text-white font-bold pl-6 pr-3" style={{ fontSize: "24px" }}>
       <h2>book<span class="text-danger font-bold">my</span>screen</h2>
     </div>
-    <div class="relative text-gray-600">
-      <input type="search" value={inputValue} onChange={(e) => handleInputChange(e)} name="search" placeholder="Search" class="form-control rounded" />
+    <div className="relative text-gray-600">
+      <input
+        type="search"
+        value={inputValue}
+        onChange={handleInputChange}
+        name="search"
+        placeholder="Search"
+        className="form-control rounded"
+      />
       {suggestions.length ? (
-      <div class="dropdown w-80">
-        {suggestions
-        .filter((item) => {
-          const searchTerm = inputValue.toLowerCase();
-          const title = item.title.toLowerCase();
-
-          return (
-            searchTerm &&
-            title.startsWith(searchTerm) &&
-            title !== searchTerm
-          );
-        })
-        .slice(0, 3)
-        .map((suggestion) => (
-          <div class="dropdown-row relative z-50" key={suggestion.title}>
-            <a onClick={() => singlePage(suggestion.movieId)}>
-              <img src={imageUrl + suggestion.image} class="w-10 h-15 object-cover object-center inline-block mr-2" />
-              <span class="inline-block">{suggestion.title}</span>
-            </a>
-          </div>
-        ))}
-      </div>
+        <div className="dropdown w-80">
+          {suggestions.map((suggestion) => (
+            <div className="dropdown-row relative z-50" key={suggestion.title}>
+              {suggestion.title && (
+                <a onClick={() => singlePage(suggestion.movieId)}>
+                  <img
+                    src={`${imageUrl}${suggestion.image}`}
+                    className="w-10 h-15 object-cover object-center inline-block mr-2"
+                  />
+                  <span className="inline-block">{suggestion.title}</span>
+                </a>
+              )}
+              {suggestion.Location && (
+                <a onClick={() => locationPage(suggestion.Location)}>
+                  <img
+                    src='https://images.template.net/101912/location-icon-clipart-5z262.jpg'
+                    className="w-10 h-15 object-cover object-center inline-block mr-2"
+                  />
+                  <span className="inline-block">{suggestion.Location}</span>
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
       ) : null}
     </div>
       

@@ -13,6 +13,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import SmallLoader from '../Loader/smallLoader';
+import Loading from '../Loader/Loading';
 
 function OwnerHome() {
   const owner =  useSelector((state)=>state.owners.owner)
@@ -21,6 +23,9 @@ function OwnerHome() {
   const [year,setYear] = useState(0)
   const [daily,setDaily] = useState(0)
   const [data,setData] = useState([])
+  const [loading1,setLoading1] = useState(true)
+  const [loading2,setLoading2] = useState(true)
+  const [loading3,setLoading3] = useState(true)
  
   useEffect(() => {
     const fetchData = async () => {
@@ -116,6 +121,21 @@ function OwnerHome() {
 
   const currentDate = new Date();
 const currentMonth = currentDate.getMonth()
+useEffect(()=>{
+  setTimeout(() => {
+   setLoading1(false)
+  }, 1000);
+ },[serie])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading2(false)
+  }, 5000);
+ },[monthly])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading3(false)
+  }, 6000);
+ },[data])
   return (
     <>
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
@@ -127,8 +147,9 @@ const currentMonth = currentDate.getMonth()
   <div className="flex-none w-2/3 max-w-full px-3">
     <div>
     <p className="mb-0 font-sans font-bold leading-normal text-md">Daily sail</p>
-    
-      <h3 className="font-bold text-2xl text-green-600">Rs.{data.total}</h3>
+    {loading3 ? ( <SmallLoader/>) : (
+              <h3 className="font-bold text-2xl text-green-600"> Rs.{data.total}</h3>
+            )}
     </div>
   </div>
   <div className="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
@@ -147,8 +168,14 @@ const currentMonth = currentDate.getMonth()
   <div className="flex-none w-2/3 max-w-full px-3">
     <div>
     <p className="mb-0 font-sans font-bold leading-normal text-md">Monthly sail</p>
-      <h3 className="font-bold text-2xl text-yellow-600">Rs.{Math.floor(monthly[currentMonth])}</h3>
-     
+    {
+            loading2 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-2xl text-yellow-600">Rs.{Math.floor(monthly[currentMonth])}</h3>
+            )
+          }
     </div>
   </div>
   <div className="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
@@ -168,7 +195,14 @@ const currentMonth = currentDate.getMonth()
     <div>
     
       <p className="mb-0 font-sans font-bold leading-normal text-md">Yearly sail</p>
-      <h3 className="font-bold text-2xl text-red-600"> Rs.{Math.floor(year)}</h3>
+      {
+            loading2 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-2xl text-red-600"> Rs.{Math.floor(year)}</h3>
+            )
+          }
      
        
      
@@ -190,16 +224,20 @@ const currentMonth = currentDate.getMonth()
         <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2"></div>
       </div>
       <div className="grid grid-cols- sm:grid-cols-2 gap-6 ">
-        <div className="h-25">
-        <h2 className="font-bold text-lg items-center  uppercase px-3 py-2">
-          Latest booking status
-          </h2>
-          <ReactApexChart
-            options={options1}
-            series={series}
-            type="donut"
-          />
-        </div>
+      
+        
+          <div className="h-25">
+          <h2 className="font-bold text-lg items-center  uppercase px-3 py-2">
+            Latest booking status
+            </h2>
+            <ReactApexChart
+              options={options1}
+              series={series}
+              type="donut"
+            />
+          </div>
+        
+        
         <div className="h-80">
         <div className="flex flex-wrap mt-5">
 
@@ -212,7 +250,14 @@ const currentMonth = currentDate.getMonth()
   </div>
   <div className="flex-1 text-right md:text-center">
     <h5 className="font-bold uppercase text-gray-400">Total Revenue</h5>
-    <h3 className="font-bold text-3xl text-gray-600">Rs.{Math.floor(year)} <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
+    {
+            loading2 ? (
+              <SmallLoader/>
+            ) : (
+
+              <h3 className="font-bold text-3xl text-gray-600">Rs.{Math.floor(year)} <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
+            )
+          }
   </div>
 </div>
 </div>
@@ -227,7 +272,10 @@ const currentMonth = currentDate.getMonth()
   </div>
   <div className="flex-1 text-right md:text-center">
     <h5 className="font-bold uppercase text-gray-400">Screens</h5>
+    {loading3 ? (<SmallLoader/>) : (
     <h3 className="font-bold text-3xl text-gray-600">{data.screenCount} <span className="text-pink-500"><i className="fas fa-exchange-alt" /></span></h3>
+            )}
+   
   </div>
 </div>
 </div>
@@ -242,7 +290,10 @@ const currentMonth = currentDate.getMonth()
   </div>
   <div className="flex-1 text-right md:text-center">
     <h5 className="font-bold uppercase text-gray-400">Shows</h5>
+    {loading3 ? (<SmallLoader/>) : (
     <h3 className="font-bold text-3xl text-gray-600">{data.showCount}<span className="text-blue-600"><i className="fas fa-exchange-alt" /></span></h3>
+            )}
+    
   </div>
 </div>
 </div>
@@ -258,7 +309,10 @@ const currentMonth = currentDate.getMonth()
         </div>
         <div className="flex-1 text-right md:text-center">
           <h5 className="font-bold uppercase text-gray-400">Total Bookings</h5>
-          <h3 className="font-bold text-3xl text-gray-600">{data.orderCount} <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
+          {loading3 ? (<SmallLoader/>) : (
+     <h3 className="font-bold text-3xl text-gray-600">{data.orderCount} <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
+            )}
+         
         </div>
       </div>
     </div>
@@ -273,7 +327,10 @@ const currentMonth = currentDate.getMonth()
   </div>
   <div className="flex-1 text-right md:text-center">
     <h5 className="font-bold uppercase text-gray-400">Active Booking</h5>
-    <h3 className="font-bold text-3xl text-gray-600">{data.activeCount} <span className="text-purple-500"><i className="fas fa-caret-up" /></span></h3>
+    {loading3 ? (<SmallLoader/>) : (
+     <h3 className="font-bold text-3xl text-gray-600">{data.activeCount} <span className="text-purple-500"><i className="fas fa-caret-up" /></span></h3>
+            )}
+    
   </div>
 </div>
 </div>
@@ -288,7 +345,10 @@ const currentMonth = currentDate.getMonth()
   </div>
   <div className="flex-1 text-right md:text-center">
     <h5 className="font-bold uppercase text-gray-400">Expired Bookings</h5>
-    <h3 className="font-bold text-3xl text-gray-600">{data.expiredCount} <span className="text-yellow-500"><i className="fas fa-caret-down" /></span></h3>
+    {loading3 ? (<SmallLoader/>) : (
+     <h3 className="font-bold text-3xl text-gray-600">{data.expiredCount} <span className="text-yellow-500"><i className="fas fa-caret-down" /></span></h3>
+            )}
+    
   </div>
 </div>
 </div>
