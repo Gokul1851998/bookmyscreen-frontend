@@ -9,8 +9,10 @@ import Rowpost from '../../../components/Rowpost/Rowpost'
   return (
     <div>
         <Header/>
+        <div className='relative z-0' style={{minHeight:'100vh'}}> 
         <Banner/>
         <Rowpost/>
+        </div>
         <Footer/>
     </div>
   )

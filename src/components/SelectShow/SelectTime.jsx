@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { getDates } from '../../api/user/users'
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import Loading from '../Loader/Loading'
 
 function SelectTime() {
 const location = useLocation()
@@ -14,7 +15,9 @@ const [movieDetails,setMovieDetails] = useState([])
 const [language,setLanguage] = useState('')
 const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
 const [movieshows,setMovieshows] = useState([])
-const [loading, setLoading] = useState(false)
+const [loading1, setLoading1] = useState(true)
+const [loading2, setLoading2] = useState(true)
+const [loading3, setLoading3] = useState(true)
 
 const currentDate = new Date();
 const date2 = new Date();
@@ -91,7 +94,6 @@ const handleButtonClick = async(index) => {
   
 }
 useEffect(() => {
-  setLoading(true)
   const fetchData = async () => {
     if (movieId && date) {
       const response = await getMovieDetails(movieId);
@@ -109,7 +111,6 @@ useEffect(() => {
      
       setMovieDetails(response);
       setLanguage(response?.spoken_languages[0]?.english_name);
-      setLoading(false)
     }
   };
   fetchData();
@@ -120,6 +121,21 @@ const bookShow =async(showId,ownerName)=>{
   navigate('/selectSeats',{state:{showId,ownerName,date}})
 }
 
+useEffect(()=>{
+  setTimeout(() => {
+   setLoading1(false)
+  }, 1000);
+ },[movieDetails])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading2(false)
+  }, 1000);
+ },[dates])
+ useEffect(()=>{
+  setTimeout(() => {
+   setLoading3(false)
+  }, 1000);
+ },[movieshows])
 
   return (
     <>
@@ -127,11 +143,16 @@ const bookShow =async(showId,ownerName)=>{
   <div className="flex flex-col sm:flex-row items-center justify-between sm:py-2 md:py-4 lg:py-6 px-4 sm:px-6 md:px-10 lg:px-16">
     <div className="text-white font sm:pl-4 md:pl-0 pr-3 pt-2 sm:pt-0 flex-grow sm:flex-grow-0">
       <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl">{movieDetails.title} - {language}</h2>
-      <div className="flex flex-wrap py-2">
+      {loading1? (
+        <Loading/>
+      ):(
+        <div className="flex flex-wrap py-2">
         {movieDetails?.genres && movieDetails.genres.map((gen) => (
           <button type="button" className="text-white border border-gray-800 font-medium rounded text-sm px-3 py-1 mr-2 mb-2">{gen.name}</button>
         ))}
       </div>
+      )}
+     
     </div>
   </div>
 </header>
@@ -139,8 +160,10 @@ const bookShow =async(showId,ownerName)=>{
 
 <header className="bg-gray-100">
   <div className="container flex flex-col items-center justify-center py-6 md:flex-row md:justify-between">
-    
-    <div className="flex items-center justify-center  ml-5 mr-5 md:mt-0">
+    {loading2? (
+     <Loading/>
+    ):(
+<div className="flex items-center justify-center  ml-5 mr-5 md:mt-0">
       {dates.map((date, index) => (
         <button
           key={index}
@@ -154,9 +177,13 @@ const bookShow =async(showId,ownerName)=>{
         </button>
       ))}
     </div>
+    )}
+    
   </div>
 </header>
-
+{loading3? (
+<Loading/>
+):(
 <div className="flex flex-col justify-center m-4">
   {movieshows.length?
     Object.values(
@@ -233,11 +260,7 @@ const bookShow =async(showId,ownerName)=>{
     )
     }
 </div>
-
-
-
-
-
+)}
         </>
   )
 }

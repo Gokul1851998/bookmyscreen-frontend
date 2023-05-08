@@ -7,7 +7,7 @@ function Movies() {
   return (
     <div>
       <Header/>
-      <AllMovies/>
+      <div style={{minHeight:'100vh'}}> <AllMovies/></div>
       <Footer/>
     </div>
   )

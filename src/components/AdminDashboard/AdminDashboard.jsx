@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 
 const AdminDashboard = () => {
+  const [loading1,setLoading1] = useState(true)
+  const [loading2,setLoading2] = useState(true)
+  const [loading3,setLoading3] = useState(true)
   const [series, setSeries] = useState([]);
   const [monthy,setMonthy]=useState([])
   const [data,setData] = useState([])

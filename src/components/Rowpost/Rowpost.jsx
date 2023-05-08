@@ -6,12 +6,13 @@ import { useDispatch } from 'react-redux';
 import { hideLoading,showLoading } from '../../redux/loadersSlice';
 import { viewMovie } from '../../api/user/users';
 import { getHomeMovies } from '../../api/movie/movie';
-
+import Loading from '../Loader/Loading';
 
 
  function Rowpost() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [loading,setLoading] = useState(true)
   const [movies,setMovies] = useState([])
  
   
@@ -27,6 +28,7 @@ import { getHomeMovies } from '../../api/movie/movie';
         const movies = await Promise.all(moviePromises);
         setMovies(movies.filter((movie) => movie)); // filter out null or undefined responses
         dispatch(hideLoading());
+       
       } catch (error) {
         console.log("something error");
       }
@@ -36,6 +38,12 @@ import { getHomeMovies } from '../../api/movie/movie';
       fetchData();
     }  
   }, [movies]);
+
+  useEffect(()=>{
+   setTimeout(() => {
+    setLoading(false)
+   }, 1000);
+  },[movies])
   
  const singlePage=(movieId)=>{
      navigate('/singleMoviePage',{state:movieId})
@@ -50,7 +58,11 @@ import { getHomeMovies } from '../../api/movie/movie';
       </div>
    
     <div className="flex flex-wrap justify-center">
-       
+     {loading?
+     (
+      <Loading/>
+     )  :(
+    <>
      {movies && movies.slice(0, 5).map((movie)=>(
     
     <div className="w-full md:w-1/2 lg:w-1/5 p-4">
@@ -83,7 +95,10 @@ import { getHomeMovies } from '../../api/movie/movie';
         
       </div>
     </div>
-   ))} 
+   ))}
+    </>
+   ) }
+     
 </div>
 </Fragment>
   )

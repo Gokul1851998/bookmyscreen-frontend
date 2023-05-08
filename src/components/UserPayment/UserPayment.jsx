@@ -70,13 +70,14 @@ import Swal from 'sweetalert2'
     const handleRazorPay = (order) => {
         console.log(order)
         const options = {
-            "key": rzp_test_LS04j2FVS1akZj,
+            "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
             handler:async function (response) {
               const order = await userOrder({details,fee,subtotal,total,image,user,language})
+          
                    if (order.success) {
                     toast.success(order.message)
                     setPayment(false)

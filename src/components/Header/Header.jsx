@@ -220,7 +220,7 @@ const singlePage=(movieId)=>{
         })
         .slice(0, 3)
         .map((suggestion) => (
-          <div class="dropdown-row" key={suggestion.title}>
+          <div class="dropdown-row relative z-50" key={suggestion.title}>
             <a onClick={() => singlePage(suggestion.movieId)}>
               <img src={imageUrl + suggestion.image} class="w-10 h-15 object-cover object-center inline-block mr-2" />
               <span class="inline-block">{suggestion.title}</span>

@@ -26,11 +26,11 @@ const Banner = () => {
   },[])
  
   return (
-    <div className='m-3'>
+    <div className='m-3 relative '>
   <MDBCarousel showIndicators showControls fade>
     <div className="carousel-inner">
-    <div className="carousel-item position-relative" style={{ height: '600px' }}>
-        <img className="position-absolute w-100 h-100" src={imageUrl+movie1.poster_path} style={{ objectFit: 'cover', filter: 'brightness(30%)' }} />
+    <div className="carousel-item position-relative z-10" style={{ height: '600px' }}>
+        <img className="position-absolute w-100 h-100 relative z-10" src={imageUrl+movie1.poster_path} style={{ objectFit: 'cover', filter: 'brightness(30%)' }} />
         <div className="carousel-caption d-flex align-items-center ml-20">
           <div className="p-3" style={{ maxWidth: '700px' }}>
             <div className="d-flex align-items-center">

@@ -6,6 +6,7 @@ import { getSeats } from '../../api/user/users'
 import { toast } from 'react-hot-toast'
 import './UserSeats.css';
 import Swal from 'sweetalert2'
+import Loading from '../Loader/Loading'
 
 function UserSeats() {
   const navigate = useNavigate()
@@ -19,6 +20,8 @@ function UserSeats() {
   const [owner,setOwner] = useState(ownerName) 
   const [selectedSeats,setSelectedSeat] = useState([]) 
   const [showDetails,setShowDetails] = useState([])
+  const [loading1, setLoading1] = useState(true)
+  const [loading2, setLoading2] = useState(true)
   useEffect(() => {
     const fetchData = async () => {
       if (showId && date) {
@@ -89,19 +92,32 @@ function UserSeats() {
   }
   }
 
+  useEffect(()=>{
+    setTimeout(() => {
+     setLoading1(false)
+    }, 1000);
+   },[showDetails])
+   useEffect(()=>{
+    setTimeout(() => {
+     setLoading2(false)
+    }, 1000);
+   },[seats])
+
   return (
   <>
     <header className="bg-gray-900 sm:h-30 md:h-30 lg:h-30">
   <div className="flex flex-col sm:flex-row items-center justify-between sm:py-2 md:py-4 lg:py-6 px-4 sm:px-6 md:px-10 lg:px-16">
-    <div className="text-white font sm:pl-4 md:pl-0 pr-3 pt-2 sm:pt-0 flex-grow sm:flex-grow-0">
+    {loading1? (
+    <Loading/>
+    ):(
+      <div className="text-white font sm:pl-4 md:pl-0 pr-3 pt-2 sm:pt-0 flex-grow sm:flex-grow-0">
       <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-2xl">{showDetails.movieName}</h2>
       <div className="flex flex-wrap py-2">
-      
         {showDetails.ownerName} | {showDetails.location} | {new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} |  {showDetails.showTime}
-         
-      
       </div>
     </div>
+    )}
+   
   </div>
 </header>
 
@@ -147,57 +163,62 @@ function UserSeats() {
         <div className='container'>
         <div className='wholeSeatDiv'>
           <div className='seatArrangeDiv mx-auto '>
-            <div className='w-full h-auto justify-center my-auto flex flex-wrap py-10'>
-            {seats && seats.map((seat,index)=>{ 
-              if(index % columns === 0){
-                return (
-                  <>
-                  {index !== 0 && <br />} 
-                  
-                  <div className='w-full flex justify-center'></div>
-                  <div className='m-2'>
-                    {seat.seatStatus !== 'sold' ? (
-                      <>
-                      <div className='flex'>
-
-                      <h1 className='mx-2 text-gray-400 font-medium'>{seat.id.slice(0,1)}</h1>
-                      <div className={`seatClass ${seat.seatStatus === 'selected' ? 'seatSelected' : ''}`} onClick={()=>handleSeat(seat)}>{seat.id.slice(2,5)}</div>
-                      </div>
-                      </>
-                    ) : (
-                      <>
-                      <div className='flex'>
-                      <h1 className='mx-2 text-gray-400 font-medium'>{seat.id.slice(0,1)}</h1>
-                      <div className={'seatSold'}></div>
-                      </div>
-                      </>
-                      
-                    )
+            {loading2? (
+            <Loading/>
+            ):(
+              <div className='w-full h-auto justify-center my-auto flex flex-wrap py-10'>
+              {seats && seats.map((seat,index)=>{ 
+                if(index % columns === 0){
+                  return (
+                    <>
+                    {index !== 0 && <br />} 
                     
-                    }
-                  </div>
-                  </>
-                )
-              }else{
-                return (
-                  <div className='m-2'>
-                    {seat.seatStatus !== 'sold' ? (
-                      <>
+                    <div className='w-full flex justify-center'></div>
+                    <div className='m-2'>
+                      {seat.seatStatus !== 'sold' ? (
+                        <>
+                        <div className='flex'>
+  
+                        <h1 className='mx-2 text-gray-400 font-medium'>{seat.id.slice(0,1)}</h1>
+                        <div className={`seatClass ${seat.seatStatus === 'selected' ? 'seatSelected' : ''}`} onClick={()=>handleSeat(seat)}>{seat.id.slice(2,5)}</div>
+                        </div>
+                        </>
+                      ) : (
+                        <>
+                        <div className='flex'>
+                        <h1 className='mx-2 text-gray-400 font-medium'>{seat.id.slice(0,1)}</h1>
+                        <div className={'seatSold'}></div>
+                        </div>
+                        </>
+                        
+                      )
                       
-                      <div className={`seatClass p-px text-sm ${seat.seatStatus === 'selected' ? 'seatSelected' : ''}`} onClick={()=>handleSeat(seat)}>{seat.id.slice(2,5)}</div>
-                      </>
-                    ) : (
-                      <>
-                      
-                      <div className={'seatSold'}></div>
-                      </> 
-                    )
-                    }
-                  </div>
-                );
-              }
-            })}
-            </div>
+                      }
+                    </div>
+                    </>
+                  )
+                }else{
+                  return (
+                    <div className='m-2'>
+                      {seat.seatStatus !== 'sold' ? (
+                        <>
+                        
+                        <div className={`seatClass p-px text-sm ${seat.seatStatus === 'selected' ? 'seatSelected' : ''}`} onClick={()=>handleSeat(seat)}>{seat.id.slice(2,5)}</div>
+                        </>
+                      ) : (
+                        <>
+                        
+                        <div className={'seatSold'}></div>
+                        </> 
+                      )
+                      }
+                    </div>
+                  );
+                }
+              })}
+              </div>
+            )}
+          
             </div>
         </div>
         </div>
