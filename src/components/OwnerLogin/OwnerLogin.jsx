@@ -45,7 +45,7 @@ import Swal from 'sweetalert2';
        
         setid(response.data._id)
         if (response.data.logIn) {    
-          console.log(response,"llllllllllllllllllllllllllllllllll");        
+              
            
           (localStorage.setItem('ownerToken',response.data?.token),setOwnerlogin(true),navigate('/owner/ownerHome'))
         }else if(response.data.status === 'You are Blocked'){

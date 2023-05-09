@@ -187,8 +187,8 @@ function OwnerSidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a  style={{ cursor: 'pointer' }}
                        
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes('community') ? 'hover:text-slate-200' : 'hover:text-white'
+                        className={`block   text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('community') ? ' hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={()=>{navigate('/owner/ownerScreen')}}
                       >

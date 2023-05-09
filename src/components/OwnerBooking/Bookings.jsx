@@ -24,7 +24,7 @@ const perPage = 6;
    
      }
      fetchData()
-    },[owner])
+    },[order])
 
   const handleBooking = async(orderId)=>{
     setModal(true)

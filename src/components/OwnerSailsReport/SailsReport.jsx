@@ -180,8 +180,13 @@ const owner = useSelector((state) => state.owners.owner);
         getRowId={(row) => row._id}
         rows={sales}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[10, 20]}
+       
         disableSelectionOnClick
         components={{ Toolbar: CustomToolbar }}
       />

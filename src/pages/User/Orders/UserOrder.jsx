@@ -6,7 +6,7 @@ function UserOrder() {
   return (
     <div>
       <Header/>
-      <div style={{minHeight:'100vh'}}><Orders /></div>
+      <div style={{ minHeight: '100vh', overflowY: 'scroll', maxHeight: '80vh' }}><Orders /></div>
       <Footer/>
     </div>
   )

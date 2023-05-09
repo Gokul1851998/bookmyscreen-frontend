@@ -24,7 +24,6 @@ const SalesReport = () => {
     const fetchData =async()=>{
   const response =await getAllorders()
   setSales(response.data)
-  console.log(response);
     }
     fetchData()
   },[])
@@ -184,8 +183,13 @@ const SalesReport = () => {
         getRowId={(row) => row._id}
         rows={sales}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 10 },
+          },
+        }}
+        pageSizeOptions={[10, 20]}
+        rowsPerPageOptions={[1]}
         disableSelectionOnClick
         components={{ Toolbar: CustomToolbar }}
       />
