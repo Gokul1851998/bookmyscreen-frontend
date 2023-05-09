@@ -35,7 +35,7 @@ function Ticket() {
     <div className='pt-2 pb-5'>
         <h1 className="font-bold text-3xl text-center">TICKET</h1>
        
-    <div key={order._id} className="ticket">
+    <div key={order._id} className="ticket ">
     <div className="title">
       
       <QRCode value={order.bookingId} />

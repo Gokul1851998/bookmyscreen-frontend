@@ -139,7 +139,7 @@ useEffect(()=>{
   return (
     <>
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-<div className="flex justify-center">
+    <div class="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0">
 <div className="flex-1 mr-1 ml-1">
 <div className="relative flex flex-col  min-w-0 mb-6 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border" style={{boxShadow:'0 0 10px rgba(0,0,0,0.5)'}} >
 <div className="flex-auto p-4" >
@@ -238,7 +238,7 @@ useEffect(()=>{
           </div>
         
         
-        <div className="h-80">
+       
         <div className="flex flex-wrap mt-5">
 
 <div className="w-full md:w-1/2  p-3">
@@ -356,7 +356,6 @@ useEffect(()=>{
 </div>
 
 </div>
-        </div>
       </div>
       <div className="grid grid-cols-1 gap-6">
       <Grid item xs={12} md={6}>

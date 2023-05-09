@@ -99,6 +99,7 @@ useEffect(() => {
       const response = await getMovieDetails(movieId);
       const shows ={response,date}
       const response2 = await getDates(shows);
+      console.log(response2);
       if(response2.success){
        setMovieshows(response2.data)
       }else{
