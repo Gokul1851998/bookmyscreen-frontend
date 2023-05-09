@@ -22,7 +22,6 @@ import Loading from '../Loader/Loading'
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
     const [loading2, setLoading2] = useState(true)
-    const [orderId,setOrderId] =  useState([])
     
 
     useEffect(() => {
@@ -57,7 +56,6 @@ import Loading from '../Loader/Loading'
         }
       }else if(method === 'Wallet'){
         const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
-        console.log(response2);
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
@@ -70,31 +68,27 @@ import Loading from '../Loader/Loading'
       }
     }
    
-    const handleRazorPay = async(order) => {
-      const response =await userOrder({details,fee,subtotal,total,image,user,language})
-      console.log(response.data);
-      if(response.success){
-        setOrderId(response.data)
-      }
+    const handleRazorPay = (order) => {
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler: function () {
-              const fetchData = async()=>{
-                if (orderId) {
-                  navigate('/success',{state:orderId})
-                 }else{
-                  toast.error('Something went wrong')
-                 }
+            handler:async function () {
+              const response = await userOrder({details,fee,subtotal,total,image,user,language})
+              console.log(response);
+              if (response.success) {
+               const orderId = response.data
+               navigate('/success',{state:orderId})
+              }else{
+               toast.error('Something went wrong')
               }
-              fetchData()
             }
         }
         const rzp = new window.Razorpay(options)
-        rzp.open()  
+        rzp.open()
+        
     }
 
    
