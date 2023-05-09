@@ -22,8 +22,8 @@ import Loading from '../Loader/Loading'
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
     const [loading2, setLoading2] = useState(true)
-    
-
+    const [orderId,setOrderId] = useState([])
+    console.log(orderId);
     useEffect(() => {
         const fetchData = async () => {
           if (details) {
@@ -68,18 +68,17 @@ import Loading from '../Loader/Loading'
       }
     }
    
-    const handleRazorPay = (order) => {
+    const handleRazorPay = async(order) => {
+      const response = await userOrder({details,fee,subtotal,total,image,user,language})
+      setOrderId(response.data)
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler:async function () {
-              const response = await userOrder({details,fee,subtotal,total,image,user,language})
-              console.log(response);
-              if (response.success) {
-               const orderId = response.data
+            handler: function () {
+              if (orderId) {
                navigate('/success',{state:orderId})
               }else{
                toast.error('Something went wrong')
