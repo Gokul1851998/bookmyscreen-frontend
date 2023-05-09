@@ -219,7 +219,7 @@ const locationPage=(location)=>{
       {suggestions.length ? (
         <div className="dropdown w-80">
           {suggestions.map((suggestion) => (
-            <div className="dropdown-row relative z-50" key={suggestion.title}>
+            <div className="dropdown-row relative z-50 " key={suggestion.title}>
               {suggestion.title && (
                 <a onClick={() => singlePage(suggestion.movieId)}>
                   <img
