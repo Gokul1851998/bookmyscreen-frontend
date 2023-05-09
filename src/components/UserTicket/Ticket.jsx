@@ -19,7 +19,6 @@ function Ticket() {
             if(response.success){
                 setOrder(response.data)
                 setTickets(response.data.selectedSeats)
-                toast.success(response.message)
             }else{
                 toast.error(response.message)
             }

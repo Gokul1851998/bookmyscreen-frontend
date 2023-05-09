@@ -69,28 +69,30 @@ import Loading from '../Loader/Loading'
       }
     }
    
-    const handleRazorPay = (order) => {
+    const handleRazorPay = async(order) => {
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler:async function () {
-              const response = await userOrder({details,fee,subtotal,total,image,user,language})
-              console.log(response);
-              if (response.success) {
-               toast.success(response.message)
-               const orderId = response.data
-               navigate('/success',{state:orderId})
-              }else{
-               toast.error('Something went wrong')
+            handler: function () {
+              const fetchData = async()=>{
+                const response =await userOrder({details,fee,subtotal,total,image,user,language})
+                console.log(response);
+                if (response.success) {
+                  toast.success(response.message)
+                  const orderId = response.data
+                  navigate('/success',{state:orderId})
+                 }else{
+                  toast.error('Something went wrong')
+                 }
               }
+            fetchData()
             }
         }
         const rzp = new window.Razorpay(options)
-        rzp.open()
-        
+        rzp.open()  
     }
 
    
