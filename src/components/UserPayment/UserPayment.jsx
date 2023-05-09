@@ -22,7 +22,7 @@ import Loading from '../Loader/Loading'
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
     const [loading2, setLoading2] = useState(true)
-    
+    const [orderId,setOrderId] =  useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,6 +70,10 @@ import Loading from '../Loader/Loading'
     }
    
     const handleRazorPay = async(order) => {
+      const response =await userOrder({details,fee,subtotal,total,image,user,language})
+      if(response.success){
+        setOrderId(response.data)
+      }
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
@@ -78,11 +82,7 @@ import Loading from '../Loader/Loading'
             "order_id": order.id,
             handler: function () {
               const fetchData = async()=>{
-                const response =await userOrder({details,fee,subtotal,total,image,user,language})
-                console.log(response);
-                if (response.success) {
-                  toast.success(response.message)
-                  const orderId = response.data
+                if (orderId) {
                   navigate('/success',{state:orderId})
                  }else{
                   toast.error('Something went wrong')
