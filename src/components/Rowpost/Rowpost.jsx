@@ -23,6 +23,7 @@ import Loading from '../Loader/Loading';
           return response2;
         });
         const movies = await Promise.all(moviePromises);
+        setLoading(false)
         setMovies(movies.filter((movie) => movie)); // filter out null or undefined responses
        
       } catch (error) {
@@ -35,11 +36,11 @@ import Loading from '../Loader/Loading';
     }  
   }, [movies]);
 
-  useEffect(()=>{
-   setTimeout(() => {
-    setLoading(false)
-   }, 1000);
-  },[movies])
+  // useEffect(()=>{
+  //  setTimeout(() => {
+  //   setLoading(false)
+  //  }, 1000);
+  // },[movies])
   
  const singlePage=(movieId)=>{
      navigate('/singleMoviePage',{state:movieId})

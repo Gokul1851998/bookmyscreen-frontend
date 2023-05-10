@@ -67,8 +67,24 @@ import Loading from '../Loader/Loading'
         toast.error('Select any payment method')
       }
     }
-   
+    
+    const bookings = async()=>{
+      setTimeout(() => {
+        const fetchData = async()=>{
+          const response = await userOrder({details,fee,subtotal,total,image,user,language})
+          if (response.success) {
+           const orderId = response.data
+           navigate('/success',{state:orderId})
+          }else{
+           toast.error('Something went wrong')
+          }
+        }
+        fetchData()
+      }, 9000);
+    }
+
     const handleRazorPay = (order) => {
+      bookings()
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
@@ -76,13 +92,7 @@ import Loading from '../Loader/Loading'
             "name": 'bookmyscreen',
             "order_id": order.id,
             handler:async function () {
-              const response = await userOrder({details,fee,subtotal,total,image,user,language})
-              if (response.success) {
-               const orderId = response.data
-               navigate('/success',{state:orderId})
-              }else{
-               toast.error('Something went wrong')
-              }
+             console.log('payment');
             }
         }
         const rzp = new window.Razorpay(options)
