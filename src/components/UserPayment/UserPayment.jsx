@@ -70,7 +70,7 @@ import Loading from '../Loader/Loading'
    
     const handleRazorPay = (order) => {
         const options = {
-            "key": 'rzp_test_LS04j2FVS1akZj',
+            "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
