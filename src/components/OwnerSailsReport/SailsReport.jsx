@@ -27,7 +27,7 @@ const owner = useSelector((state) => state.owners.owner);
         if(owner){
             const response =await getBookings(owner._id)
             setSales(response.data)
-            console.log(response);
+     
         }
     }
     fetchData()
@@ -118,7 +118,7 @@ const owner = useSelector((state) => state.owners.owner);
 
   const CustomToolbar = () => {
     const handleExport = () => {
-      console.log("herre");
+  
       // Get the current data from the DataGrid
       const data = sales.map((row) => ({
         ...row,

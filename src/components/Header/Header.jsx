@@ -74,7 +74,7 @@ const [suggestions,setSuggestions] = useState([])
     if (signPassword === signCPassword) {
         setLoading(true)
         axios.post(`${userUrl}getOtp`, userSignup).then((response) => {
-          console.log(response);
+        
             response.data.userExist ? toast.error('User Already Exist') : (setSignModal(false), setShowModal(false), setOtpModal('otp'))
         }).catch((err) => {
             toast.error('some unexpected errors please try after some time')

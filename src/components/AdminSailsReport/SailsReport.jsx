@@ -121,7 +121,7 @@ const SalesReport = () => {
 
   const CustomToolbar = () => {
     const handleExport = () => {
-      console.log("herre");
+
       // Get the current data from the DataGrid
       const data = sales.map((row) => ({
         ...row,

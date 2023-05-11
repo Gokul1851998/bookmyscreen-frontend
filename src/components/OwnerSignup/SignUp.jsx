@@ -57,7 +57,7 @@ import { useNavigate } from 'react-router-dom'
         axios
           .post(`${ownerUrl}signUp`, { OwnerData, otp, imageData })
           .then((response) => {
-            console.log(response)
+          
             response.data.status
               ? (navigate('/owner'), setOwnerOtp(false), setLoading(false))
               : toast.error('Incorrect otp')

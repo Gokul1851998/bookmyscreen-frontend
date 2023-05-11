@@ -13,7 +13,7 @@ function Wallet() {
          const fetchData = async()=>{
           if(user){
             const response = await getWallet(user)
-            console.log(response.data);
+      
             if(response.success){
              setUsers(response.data)
              setWallet(response.data.wallet.toFixed(2))

@@ -18,7 +18,7 @@ import { imageUrl } from '../../constants/constants';
         const fetchData = async() => {
           const response = await getMovieDetails(movieId)
           const response2 = await getCastDetails(movieId)
-          console.log(response);
+    
           setMovieDetails(response)
           setGenres(response?.genres)
           setLanguage(response?.original_language)

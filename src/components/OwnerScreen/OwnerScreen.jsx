@@ -79,7 +79,7 @@ function OwnerScreen() {
     e.preventDefault();
     const response = await addScreen(screenData);
     if (response.success) {
-      console.log(response);
+
       setScreens(response.data);
       toast.success("Screen added successfully");
       toggleModal();

@@ -29,9 +29,9 @@ const perPage = 6;
   const handleBooking = async(orderId)=>{
     setModal(true)
     const response = await viewOrder(orderId)
-    console.log(response);
+
     if(response.success){
-      console.log(response);
+    
       setOrders(response.data)
       setTicket(response.data.selectedSeats)
     }else{

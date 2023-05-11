@@ -44,7 +44,7 @@ const perPage = 6;
         setModal(true)
         const response = await viewOrder(orderId)
         if(response.success){
-          console.log(response);
+       
           setOrder(response.data)
           setTicket(response.data.selectedSeats)
         }else{

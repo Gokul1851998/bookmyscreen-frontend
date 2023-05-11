@@ -13,7 +13,7 @@ import './OwnerList.css'
     useEffect(() => {
         const fetchOwner = async () => {
           const response = await getAllOwners();
-          // console.log(response.data);
+         
           if (response.success) {
             setOwners(response.data);
           } else {
@@ -24,7 +24,7 @@ import './OwnerList.css'
       }, []);
     
       const handleApproved = (ownerId) =>{
-        console.log('loh');
+     
         Swal.fire({
           title: 'Are you sure?',
           text: "You are giving Approval to a theater Owner!",
@@ -53,7 +53,7 @@ import './OwnerList.css'
       
       const handleDenied= async(ownerId)=>{
         const response = await ownerDenied({ownerId})
-        console.log(response);
+   
         Swal.fire(
           'Denied',
           'The Owner request Denied',

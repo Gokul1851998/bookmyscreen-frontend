@@ -45,7 +45,7 @@ function TheatreManagement() {
 
       const handleUnblock= async (ownerId)=>{
         const response = await unblockOwner({ownerId})
-        console.log(response);
+  
         Swal.fire(
           'Unblocked',
           'The Owner is unblocked',

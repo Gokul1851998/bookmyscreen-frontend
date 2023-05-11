@@ -16,12 +16,12 @@ function ProtectedRouteUser(props) {
         dispatch(setUser(response.data))
       }else{
         dispatch(setUser(null))
-        console.log(response.message)
+       
       }
 
     } catch (error) {
       dispatch(setUser(null))
-      console.log(error.message)
+  
     }
   }
 

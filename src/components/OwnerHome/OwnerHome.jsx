@@ -34,14 +34,14 @@ function OwnerHome() {
       setSeries(response.data);
       const response1 = await getMonthlySails(owner)
       if(response1.success){
-        console.log(response1);
+       
         setMonthly(response1.data.userCount)
         setYear(response1.data.years)
       }else{
         setMonthly(response1.data)
       }
       const response2 = await getDailySails(owner)
-      console.log(response2);
+     
       setData(response2.data)
       }
     };

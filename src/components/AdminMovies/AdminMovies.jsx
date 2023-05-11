@@ -39,7 +39,7 @@ const perPage = 6
         e.preventDefault()
         const response = await getMovieDetailsByName(inputValue)
         const response2 = await addMovieDetails({movieDetails:response.results[0]})
-        console.log(response2.data)
+        
         if(response2.success){
             Swal.fire(response2.message).then(() => {
               setMovieModal(false),

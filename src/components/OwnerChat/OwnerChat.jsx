@@ -39,7 +39,7 @@ function OwnerChat() {
   },[])
 
   const handleSendMsg = async (msg) => {
-    console.log(msg);
+;
     socket.current.emit("send-msg", {
       to: userId,
       from: owner._id,

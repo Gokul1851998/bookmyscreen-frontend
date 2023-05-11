@@ -49,7 +49,7 @@ function UserSeats() {
     if(seatDetails.seatStatus === 'available'){
       seatDetails.seatStatus = 'selected'
       setSelectedSeat([...selectedSeats,seatDetails])
-      console.log(selectedSeats);
+  
     }else{
       seatDetails.seatStatus = 'available'
       const updatedSeats = selectedSeats.filter(
