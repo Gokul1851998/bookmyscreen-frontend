@@ -10,9 +10,9 @@
 
 
 
-export const userUrl='https://echo-cart.shop/' 
-export const ownerUrl = 'https://echo-cart.shop/owner/'
-export const adminUrl ='https://echo-cart.shop/admin/'
+export const userUrl='https://cors-anywhere.echo-cart.shop/' 
+export const ownerUrl = 'https://cors-anywhere.echo-cart.shop/owner/'
+export const adminUrl ='https://cors-anywhere.echo-cart.shop/admin/'
 
 
 export const movieUrl ='https://api.themoviedb.org/3'
