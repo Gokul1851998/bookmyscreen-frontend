@@ -20,8 +20,8 @@ import Loading from '../Loader/Loading'
     const [language,setlanguage] = useState('')
     const [payment,setPayment] = useState(true)
     const [method,setMethod] = useState('')
-    const [loading1, setLoading1] = useState(true)
-    const [loading2, setLoading2] = useState(true)
+    const [loading, setLoading] = useState(true)
+   
     const [bookingId,setBookingId] = useState('')
     useEffect(() => {
         const fetchData = async () => {
@@ -32,8 +32,10 @@ import Loading from '../Loader/Loading'
             const response = await getBill(details)
             const response2 = await getPicture(response.data)
             if(response2){
+              setLoading(false)
               setImage(response2.poster_path)
               setlanguage(response2.spoken_languages[0].english_name)
+             
             }
           }
         }
@@ -90,22 +92,13 @@ import Loading from '../Loader/Loading'
                
             }
         }
-        const rzp = new window.Razorpay(options)
+        const rzp = new Razorpay(options)
         rzp.open()
         
     }
 
-   
-    useEffect(()=>{
-      setTimeout(() => {
-       setLoading1(false)
-      }, 1000);
-     },[image])
-     useEffect(()=>{
-      setTimeout(() => {
-       setLoading2(false)
-      }, 1000);
-     },[language])
+
+  
 
   return (
     <div >
@@ -115,7 +108,7 @@ import Loading from '../Loader/Loading'
           <div className="right border" style={{backgroundColor:'#fffcdc'}}>
           <div className="header pb-2" style={{ textAlign: "center" }}>Booking Summary</div>
           <hr className="mt-2 mb-2" />
-            {loading1? (
+            {loading? (
               <Loading/>
             ):(
               <div className="row item">
