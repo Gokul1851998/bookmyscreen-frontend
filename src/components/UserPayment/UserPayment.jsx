@@ -21,7 +21,6 @@ import Loading from '../Loader/Loading'
     const [payment,setPayment] = useState(true)
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
-    const [loading2, setLoading2] = useState(true)
     const [bookingId,setBookingId] = useState('')
     useEffect(() => {
         const fetchData = async () => {
@@ -32,6 +31,7 @@ import Loading from '../Loader/Loading'
             const response = await getBill(details)
             const response2 = await getPicture(response.data)
             if(response2){
+              setLoading1(false)
               setImage(response2.poster_path)
               setlanguage(response2.spoken_languages[0].english_name)
             }
@@ -75,11 +75,13 @@ import Loading from '../Loader/Loading'
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler:async function (response) {
+            handler:async function () {
+              setLoading1(true)
               if(bookingId){
-               await userOrder({bookingId,response}).then((response)=>{
+               await userOrder({bookingId}).then((response)=>{
                   console.log(response);
                  if (response.success) {
+                  setLoading1(false)
                const orderId = response.data
                navigate('/success',{state:orderId})
               }else{
@@ -90,22 +92,13 @@ import Loading from '../Loader/Loading'
                
             }
         }
-        const rzp = new window.Razorpay(options)
+        const rzp = new Razorpay(options)
         rzp.open()
         
     }
 
-   
-    useEffect(()=>{
-      setTimeout(() => {
-       setLoading1(false)
-      }, 1000);
-     },[image])
-     useEffect(()=>{
-      setTimeout(() => {
-       setLoading2(false)
-      }, 1000);
-     },[language])
+  
+    
 
   return (
     <div >
