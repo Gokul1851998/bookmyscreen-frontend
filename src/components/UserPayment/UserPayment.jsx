@@ -21,7 +21,8 @@ import Loading from '../Loader/Loading'
     const [payment,setPayment] = useState(true)
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
-    const [booking,setBooking] = useState([])
+    const [loading2, setLoading2] = useState(true)
+    const [bookingId,setBookingId] = useState('')
     useEffect(() => {
         const fetchData = async () => {
           if (details) {
@@ -31,7 +32,6 @@ import Loading from '../Loader/Loading'
             const response = await getBill(details)
             const response2 = await getPicture(response.data)
             if(response2){
-              setLoading1(false)
               setImage(response2.poster_path)
               setlanguage(response2.spoken_languages[0].english_name)
             }
@@ -46,7 +46,7 @@ import Loading from '../Loader/Loading'
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
           if(response.data){
               handleRazorPay(response.data.order)
-              setBooking(response.data.bookings)
+              setBookingId(response.data.orderId)
           }else{
               toast.error('Something went wrong')
           }
@@ -58,6 +58,7 @@ import Loading from '../Loader/Loading'
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
+          console.log(orderId);
           navigate('/success',{state:orderId})
         }else{
           toast.error(response2.message)
@@ -68,33 +69,43 @@ import Loading from '../Loader/Loading'
     }
    
     const handleRazorPay = (order) => {
-      const options = {
-        'key': 'rzp_test_LS04j2FVS1akZj',
-        'amount': order.amount,
-        'currency': order.currency,
-        'name': 'bookmyscreen',
-       ' order_id': order.id,
-        'handler': function (response) {
-          // Check if payment was successful
-          if (response.razorpay_payment_id) {
-
-              const orderId = booking
-              // Redirect to success page
-              navigate('/success', { state: orderId })
-            
-          } else {  
-            // Payment failed
-            console.log('Payment failed')
-          }
+        const options = {
+            "key": import.meta.env.VITE_RAZORPAY_ID,
+            "amount": order.amount,
+            "currency": order.currency,
+            "name": 'bookmyscreen',
+            "order_id": order.id,
+            handler:async function (response) {
+              if(bookingId){
+               await userOrder({bookingId,response}).then((response)=>{
+                  console.log(response);
+                 if (response.success) {
+               const orderId = response.data
+               navigate('/success',{state:orderId})
+              }else{
+               toast.error('Something went wrong')
+              }
+                 })
+              }
+               
+            }
         }
-      };
-      const rzp = new Razorpay(options);
-      rzp.open();
-    };
-    
+        const rzp = new window.Razorpay(options)
+        rzp.open()
+        
+    }
 
-  
-    
+   
+    useEffect(()=>{
+      setTimeout(() => {
+       setLoading1(false)
+      }, 1000);
+     },[image])
+     useEffect(()=>{
+      setTimeout(() => {
+       setLoading2(false)
+      }, 1000);
+     },[language])
 
   return (
     <div >
