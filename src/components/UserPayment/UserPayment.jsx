@@ -43,9 +43,12 @@ import Loading from '../Loader/Loading'
       }, [details,user])
     
       const initializePayment = async() => {
-        if(method === 'Razorpay'){
+        if(method == 'Razorpay'){
+          console.log('here2');
         if(payment){
+          console.log("2");
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
+          console.log(response);
           if(response.data){
               handleRazorPay(response.data.order)
               setBookingId(response.data.orderId)
@@ -55,7 +58,8 @@ import Loading from '../Loader/Loading'
         }else{
           Swal.fire('You are already paid')
         }
-      }else if(method === 'Wallet'){
+      }else if(method == 'Wallet'){
+        console.log('here');
         const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
         if(response2?.success){
           Swal.fire(response2.message)
