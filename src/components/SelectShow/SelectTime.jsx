@@ -15,9 +15,8 @@ const [movieDetails,setMovieDetails] = useState([])
 const [language,setLanguage] = useState('')
 const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
 const [movieshows,setMovieshows] = useState([])
-const [loading1, setLoading1] = useState(true)
-const [loading2, setLoading2] = useState(true)
-const [loading3, setLoading3] = useState(true)
+const [loading, setLoading] = useState(true)
+
 
 const currentDate = new Date();
 const date2 = new Date();
@@ -101,6 +100,7 @@ useEffect(() => {
       const response2 = await getDates(shows);
 ;
       if(response2.success){
+        setLoading(false)
        setMovieshows(response2.data)
       }else{
         Swal.fire(
@@ -122,21 +122,7 @@ const bookShow =async(showId,ownerName)=>{
   navigate('/selectSeats',{state:{showId,ownerName,date}})
 }
 
-useEffect(()=>{
-  setTimeout(() => {
-   setLoading1(false)
-  }, 1000);
- },[movieDetails])
- useEffect(()=>{
-  setTimeout(() => {
-   setLoading2(false)
-  }, 1000);
- },[dates])
- useEffect(()=>{
-  setTimeout(() => {
-   setLoading3(false)
-  }, 1000);
- },[movieshows])
+
 
   return (
     <>
@@ -144,7 +130,7 @@ useEffect(()=>{
   <div className="flex flex-col sm:flex-row items-center justify-between sm:py-2 md:py-4 lg:py-6 px-4 sm:px-6 md:px-10 lg:px-16">
     <div className="text-white font sm:pl-4 md:pl-0 pr-3 pt-2 sm:pt-0 flex-grow sm:flex-grow-0">
       <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl">{movieDetails.title} - {language}</h2>
-      {loading1? (
+      {loading? (
         <Loading/>
       ):(
         <div className="flex flex-wrap py-2">
@@ -161,7 +147,7 @@ useEffect(()=>{
 
 <header className="bg-gray-100">
   <div className="container flex flex-col items-center justify-center py-6 md:flex-row md:justify-between">
-    {loading2? (
+    {loading? (
      <Loading/>
     ):(
 <div className="flex items-center justify-center  ml-5 mr-5 md:mt-0">
@@ -182,7 +168,7 @@ useEffect(()=>{
     
   </div>
 </header>
-{loading3? (
+{loading? (
 <Loading/>
 ):(
 <div className="flex flex-col justify-center m-4">

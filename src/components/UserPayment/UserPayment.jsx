@@ -51,10 +51,10 @@ import Loading from '../Loader/Loading'
        
       const onlinePay = async() => {
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
-          console.log(response);
+          
           if(response.data){
-              handleRazorPay(response.data.order)
-              setBookingId(response.data.orderId)
+              handleRazorPay(response.data.order,response.data.bookings)
+              
           }else{
               toast.error('Something went wrong')
           }
@@ -72,30 +72,22 @@ import Loading from '../Loader/Loading'
         }
     }
    
-    const handleRazorPay = (order) => {
+    const handleRazorPay = async(order,orderId) => {
+      console.log(order);
+      console.log(orderId);
         const options = {
             "key": import.meta.env.VITE_RAZORPAY_ID,
             "amount": order.amount,
             "currency": order.currency,
             "name": 'bookmyscreen',
             "order_id": order.id,
-            handler:async function (response) {
-              if(bookingId){
-               await userOrder({bookingId,response}).then((response)=>{
-                  console.log(response);
-                 if (response.success) {
-               const orderId = response.data
-               navigate('/success',{state:orderId})
-              }else{
-               toast.error('Something went wrong')
-              }
-                 })
-              }
-               
+            handler: function (response) {
+               console.log(response);
+               navigate('/success',{state:orderId})  
             }
         }
         const rzp = new Razorpay(options)
-        rzp.open()
+         await rzp.open()
         
     }
 
