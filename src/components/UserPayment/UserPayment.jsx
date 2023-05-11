@@ -21,7 +21,7 @@ import Loading from '../Loader/Loading'
     const [payment,setPayment] = useState(true)
     const [method,setMethod] = useState('')
     const [loading1, setLoading1] = useState(true)
-    const [bookingId,setBookingId] = useState('')
+    const [booking,setBooking] = useState([])
     useEffect(() => {
         const fetchData = async () => {
           if (details) {
@@ -46,7 +46,7 @@ import Loading from '../Loader/Loading'
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
           if(response.data){
               handleRazorPay(response.data.order)
-              setBookingId(response.data.orderId)
+              setBooking(response.data.bookings)
           }else{
               toast.error('Something went wrong')
           }
@@ -58,7 +58,6 @@ import Loading from '../Loader/Loading'
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
-          console.log(orderId);
           navigate('/success',{state:orderId})
         }else{
           toast.error(response2.message)
@@ -69,33 +68,30 @@ import Loading from '../Loader/Loading'
     }
    
     const handleRazorPay = (order) => {
-        const options = {
-            "key": import.meta.env.VITE_RAZORPAY_ID,
-            "amount": order.amount,
-            "currency": order.currency,
-            "name": 'bookmyscreen',
-            "order_id": order.id,
-            handler:async function () {
-              setLoading1(true)
-              if(bookingId){
-               await userOrder({bookingId}).then((response)=>{
-                  console.log(response);
-                 if (response.success) {
-                  setLoading1(false)
-               const orderId = response.data
-               navigate('/success',{state:orderId})
-              }else{
-               toast.error('Something went wrong')
-              }
-                 })
-              }
-               
-            }
+      const options = {
+        'key': import.meta.env.VITE_RAZORPAY_ID,
+        'amount': order.amount,
+        'currency': order.currency,
+        'name': 'bookmyscreen',
+       ' order_id': order.id,
+        'handler': function (response) {
+          // Check if payment was successful
+          if (response.razorpay_payment_id) {
+
+              const orderId = booking
+              // Redirect to success page
+              navigate('/success', { state: orderId })
+            
+          } else {  
+            // Payment failed
+            console.log('Payment failed')
+          }
         }
-        const rzp = new Razorpay(options)
-        rzp.open()
-        
-    }
+      };
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+    
 
   
     

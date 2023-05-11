@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast'
     const navigate = useNavigate()
     const location = useLocation()
     const orderId = location.state._id
+    console.log(orderId);
     const handleBill = () =>{
         if(orderId){
             navigate('/ticket',{state:orderId})
