@@ -41,12 +41,15 @@ import Loading from '../Loader/Loading'
         }
         fetchData()
       }, [details,user])
-    
-      const initializePayment = async() => {
-        if(method == 'Razorpay'){
-          console.log('here2');
-        if(payment){
-          console.log("2");
+      const initializePayment = async()=>{
+        if(method == 'Wallet'){
+          walletPay()
+        }else{
+          onlinePay()
+        }
+      }
+       
+      const onlinePay = async() => {
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
           console.log(response);
           if(response.data){
@@ -55,12 +58,10 @@ import Loading from '../Loader/Loading'
           }else{
               toast.error('Something went wrong')
           }
-        }else{
-          Swal.fire('You are already paid')
-        }
-      }else if(method == 'Wallet'){
-        console.log('here');
-        const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
+    }
+
+    const walletPay = async()=>{
+      const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
@@ -69,9 +70,6 @@ import Loading from '../Loader/Loading'
         }else{
           toast.error(response2.message)
         }
-      }else{
-        toast.error('Select any payment method')
-      }
     }
    
     const handleRazorPay = (order) => {
