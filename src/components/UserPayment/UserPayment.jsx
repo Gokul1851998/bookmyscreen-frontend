@@ -53,6 +53,7 @@ import Loading from '../Loader/Loading'
        
       const onlinePay = async() => {
         console.log('1');
+        console.log(details,fee,subtotal,total,image,user,language);
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
           console.log(response);
           console.log('2');
