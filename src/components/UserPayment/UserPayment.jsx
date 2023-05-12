@@ -55,7 +55,6 @@ import Loading from '../Loader/Loading'
         console.log('1');
         console.log(details,fee,subtotal,total,image,user,language);
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
-          console.log(response);
           console.log('2');
           if(response?.data){
               handleRazorPay(response.data.order,response.data.bookings)
@@ -68,7 +67,6 @@ import Loading from '../Loader/Loading'
     const walletPay = async()=>{
       console.log('3');
       const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
-      console.log(response2);
       console.log('4');
         if(response2?.success){
           Swal.fire(response2.message)
@@ -90,7 +88,6 @@ import Loading from '../Loader/Loading'
             "name": 'bookmyscreen',
             "order_id": order.id,
             handler: function (response) {
-               console.log(response);
                navigate('/success',{state:orderId})  
             }
         }

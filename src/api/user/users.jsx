@@ -55,6 +55,7 @@ export const getPayment = async(payload) => {
         const token =  localStorage.getItem("userToken")
 const headers = { Authorization: `Bearer ${token}` }
         const response = await axios.post(`${userUrl}get-payment`,(payload),{headers})
+        console.log(response,'here1');
         return response.data
     } catch (error) {
         return error.response
