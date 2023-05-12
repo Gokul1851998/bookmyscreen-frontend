@@ -66,7 +66,7 @@ import Loading from '../Loader/Loading'
     const walletPay = async()=>{
       console.log('3');
       const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
-      console.log('4');
+      console.log(response2);
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
