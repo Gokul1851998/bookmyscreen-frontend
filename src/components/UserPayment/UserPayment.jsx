@@ -44,15 +44,19 @@ import Loading from '../Loader/Loading'
       const initializePayment = async()=>{
         if(method == 'Wallet'){
           walletPay()
-        }else{
+        }else if(method == 'Razorpay'){
           onlinePay()
+        }else{
+          toast.error('Select any payment method')
         }
       }
        
       const onlinePay = async() => {
+        console.log('1');
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
-          
-          if(response.data){
+          console.log(response);
+          console.log('2');
+          if(response?.data){
               handleRazorPay(response.data.order,response.data.bookings)
               
           }else{
@@ -61,7 +65,10 @@ import Loading from '../Loader/Loading'
     }
 
     const walletPay = async()=>{
+      console.log('3');
       const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
+      console.log(response2);
+      console.log('4');
         if(response2?.success){
           Swal.fire(response2.message)
           const orderId = response2.data
