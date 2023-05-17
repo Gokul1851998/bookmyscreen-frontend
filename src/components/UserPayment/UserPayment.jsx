@@ -42,6 +42,7 @@ import Loading from '../Loader/Loading'
         fetchData()
       }, [details,user])
       const initializePayment = async()=>{
+        setLoading(true)
         if(method == 'Wallet'){
           walletPay()
         }else if(method == 'Razorpay'){
@@ -56,6 +57,7 @@ import Loading from '../Loader/Loading'
           const response = await getPayment({details,fee,subtotal,total,image,user,language})
           console.log('2');
           if(response?.data){
+            setLoading(false)
               handleRazorPay(response.data.order,response.data.bookings)
               
           }else{
@@ -68,6 +70,7 @@ import Loading from '../Loader/Loading'
       const response2 = await getBalance({details,fee,subtotal,total,image,user,language})
       console.log(response2);
         if(response2?.success){
+          setLoading(false)
           Swal.fire(response2.message)
           const orderId = response2.data
           console.log(orderId);
