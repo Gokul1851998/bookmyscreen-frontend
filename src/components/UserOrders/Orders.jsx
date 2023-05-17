@@ -17,8 +17,10 @@ function Orders() {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
+        
         const response = await getOrder(user);
         if (response.success) {
+          setLoading(false)
           setActiveOrders(response.data.activeOrders);
           setExpiredOrders(response.data.expireOrders);
         } else {
@@ -54,14 +56,7 @@ function Orders() {
     });
   };
 
-  useEffect(() => {
-    const loader = () => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    };
-    loader();
-  }, [activeOrders, expiredOrders]);
+  
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-6xl mx-auto ">

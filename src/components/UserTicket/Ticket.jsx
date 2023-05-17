@@ -6,17 +6,20 @@ import { getSingleorder } from '../../api/user/users'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import QRCode from 'qrcode.react'
+import Loading from '../Loader/Loading'
 
 function Ticket() {
     const location = useLocation()
     const orderId = location.state
     const [order,setOrder] = useState([])
     const [tickets,setTickets] = useState([])
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
           if(orderId){
             const response =await getSingleorder(orderId)
             if(response.success){
+              setLoading(false)
                 setOrder(response.data)
                 setTickets(response.data.selectedSeats)
             }else{
@@ -33,8 +36,10 @@ function Ticket() {
    
     <div className='pt-2 pb-5'>
         <h1 className="font-bold text-3xl text-center">TICKET</h1>
-       
-    <div key={order._id} className="ticket ">
+        {loading ? (
+        <Loading />
+      ) : (
+<div key={order._id} className="ticket ">
     <div className="title">
       
       <QRCode value={order.bookingId} />
@@ -70,6 +75,8 @@ function Ticket() {
     </div>
     </div>
   </div>
+       )}
+    
   </div>
  
   )
