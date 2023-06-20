@@ -7,7 +7,7 @@ function MoviePage() {
   return (
     <div>
       <Header/>
-      <SinglePage/>
+      <div style={{minHeight:'100vh'}}> <SinglePage/></div> 
       <Footer/>
     </div>
   )
